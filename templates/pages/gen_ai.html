@@ -1,0 +1,175 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+
+{% load static %}
+
+{% block meta_tags %}
+<meta name="description" content="AY Technology Gen AI Accelerator - Building next-generation AI solutions including LLMs, Computer Vision, and Generative AI platforms.">
+<meta name="keywords" content="gen AI, generative AI, LLM, computer vision, AI accelerator, GPT, Claude, Llama">
+<meta property="og:title" content="Gen AI Accelerator | AY Technology">
+<meta property="og:description" content="Accelerating generative AI innovation for enterprise transformation.">
+<meta name="robots" content="index, follow">
+{% endblock %}
+
+<style>
+    .innovation-detail-hero {
+        padding: 100px 80px;
+        text-align: center;
+        background: radial-gradient(circle at 30% 10%, rgba(26,0,79,1) 0%, rgba(59,10,130,1) 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    .innovation-detail-hero h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #ffffff, #c084fc, #a855f7);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 20px;
+        animation: fadeInUp 0.8s ease;
+    }
+    .innovation-detail-hero p {
+        font-size: 1.2rem;
+        color: #cbd5e1;
+        max-width: 700px;
+        margin: 0 auto;
+        animation: fadeInUp 0.8s ease 0.2s backwards;
+    }
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .section-container {
+        padding: 80px;
+        background: radial-gradient(circle at 80% 30%, #0a0f2c, #020617);
+    }
+    .section-container-light {
+        padding: 80px;
+        background: radial-gradient(circle at 10% 20%, rgba(26,0,79,1) 0%, rgba(59,10,130,1) 100%);
+    }
+    .section-title {
+        font-size: 2.2rem;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #fff, #c084fc);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    .ai-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 40px;
+        margin-top: 40px;
+    }
+    .ai-card {
+        background: rgba(255,255,255,0.04);
+        backdrop-filter: blur(10px);
+        border-radius: 28px;
+        padding: 35px;
+        border: 1px solid rgba(168,85,247,0.25);
+        transition: all 0.3s;
+    }
+    .ai-card:hover {
+        transform: translateY(-8px);
+        border-color: #a855f7;
+        box-shadow: 0 20px 40px rgba(168,85,247,0.2);
+    }
+    .ai-icon {
+        font-size: 3rem;
+        color: #a855f7;
+        margin-bottom: 20px;
+    }
+    .ai-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: #f1f5f9;
+    }
+    .ai-status {
+        display: inline-block;
+        background: rgba(245,158,11,0.2);
+        color: #fbbf24;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        margin-top: 15px;
+    }
+    .tech-tag {
+        background: rgba(168,85,247,0.15);
+        border: 1px solid rgba(168,85,247,0.3);
+        padding: 12px 25px;
+        border-radius: 40px;
+        font-weight: 500;
+        transition: all 0.3s;
+    }
+    @media (max-width: 1000px) {
+        .innovation-detail-hero { padding: 60px 30px; }
+        .innovation-detail-hero h1 { font-size: 2.5rem; }
+        .section-container, .section-container-light { padding: 50px 30px; }
+    }
+    @media (max-width: 650px) {
+        .innovation-detail-hero h1 { font-size: 2rem; }
+        .section-title { font-size: 1.8rem; }
+        .ai-grid { grid-template-columns: 1fr; }
+    }
+    .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
+<section class="innovation-detail-hero fade-in">
+    <h1>Gen AI Accelerator</h1>
+    <p>Building the next generation of generative AI solutions for enterprise transformation</p>
+</section>
+
+<section class="section-container fade-in">
+    <h2 class="section-title">Our AI Initiatives</h2>
+    <div class="ai-grid">
+        <div class="ai-card">
+            <div class="ai-icon"><i class="fas fa-comment-dots"></i></div>
+            <h3>Enterprise LLM Platform</h3>
+            <p>Custom fine-tuned LLMs for industry-specific use cases with privacy-first architecture.</p>
+            <span class="ai-status">🚀 Launching Q4 2026</span>
+        </div>
+        <div class="ai-card">
+            <div class="ai-icon"><i class="fas fa-eye"></i></div>
+            <h3>Computer Vision Suite</h3>
+            <p>Advanced image recognition and video analytics for security, retail, and manufacturing.</p>
+            <span class="ai-status">🔬 Beta Available</span>
+        </div>
+        <div class="ai-card">
+            <div class="ai-icon"><i class="fas fa-music"></i></div>
+            <h3>Generative Media Studio</h3>
+            <p>AI-powered content generation for text, images, audio, and video.</p>
+            <span class="ai-status">🎨 Early Access</span>
+        </div>
+    </div>
+</section>
+
+<section class="section-container-light fade-in">
+    <h2 class="section-title" style="text-align: center;">Technology Stack</h2>
+    <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 40px;">
+        <span class="tech-tag">OpenAI API</span>
+        <span class="tech-tag">Claude</span>
+        <span class="tech-tag">Llama 3</span>
+        <span class="tech-tag">LangChain</span>
+        <span class="tech-tag">Hugging Face</span>
+        <span class="tech-tag">Stable Diffusion</span>
+    </div>
+</section>
+
+<script>
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    fadeElements.forEach(el => observer.observe(el));
+</script>
+
+{% endblock %}

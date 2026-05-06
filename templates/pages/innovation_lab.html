@@ -1,0 +1,1008 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+
+{% load static %}
+
+<!-- SEO Meta Tags -->
+{% block meta_tags %}
+<meta name="description" content="Explore AY Technology's Innovation Lab - Building the future of AI, SaaS, and cutting-edge technology. Join our waitlist for early access to revolutionary products.">
+<meta name="keywords" content="innovation lab, AI projects, SaaS products, technology innovation, AI research, future technology, early access, beta programs">
+<meta name="author" content="AY Technology">
+<meta property="og:title" content="Innovation Lab | AY Technology - Building the Future">
+<meta property="og:description" content="Discover breakthrough technologies being built at AY Technology's Innovation Lab. Join our waitlist for early access.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{% static 'images/innovation-lab-og.jpg' %}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Innovation Lab | AY Technology">
+<meta name="twitter:description" content="Join our waitlist for early access to groundbreaking AI and SaaS products.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
+
+<style>
+    /* Innovation Lab Page Styles */
+    .innovation-hero {
+        padding: 120px 80px;
+        text-align: center;
+        background: radial-gradient(circle at 30% 10%, rgba(26,0,79,1) 0%, rgba(59,10,130,1) 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    .innovation-hero h1 {
+        font-size: 4rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #ffffff, #c084fc, #a855f7);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 20px;
+        animation: fadeInUp 0.8s ease;
+    }
+    .innovation-hero p {
+        font-size: 1.2rem;
+        color: #cbd5e1;
+        max-width: 700px;
+        margin: 0 auto;
+        animation: fadeInUp 0.8s ease 0.2s backwards;
+    }
+    .hero-badge {
+        display: inline-block;
+        background: rgba(168,85,247,0.2);
+        border: 1px solid rgba(168,85,247,0.4);
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        color: #c084fc;
+        margin-bottom: 25px;
+        animation: fadeInUp 0.8s ease 0.1s backwards;
+    }
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .innovation-hero::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(168,85,247,0.1) 0%, transparent 70%);
+        animation: rotate 25s linear infinite;
+    }
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    .fade-in.visible {
+        opacity: 1;
+        animation: fadeInUp 0.8s ease forwards;
+    }
+
+    /* Intro Section */
+    .intro-section {
+        padding: 80px;
+        background: radial-gradient(circle at 80% 30%, #0a0f2c, #020617);
+        text-align: center;
+    }
+    .vision-statement {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    .vision-statement h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #fff, #c084fc);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    .vision-statement p {
+        color: #cbd5e1;
+        line-height: 1.8;
+        font-size: 1.1rem;
+    }
+    .vision-stats {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        margin-top: 50px;
+        flex-wrap: wrap;
+    }
+    .vision-stat {
+        text-align: center;
+    }
+    .vision-stat .number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #c084fc;
+    }
+    .vision-stat .label {
+        color: #94a3b8;
+        font-size: 0.9rem;
+    }
+    .vision-stat {
+        padding: 20px;
+        background: rgba(168,85,247,0.08);
+        border-radius: 16px;
+        border: 1px solid rgba(168,85,247,0.2);
+        transition: all 0.3s ease;
+    }
+    .vision-stat:hover {
+        background: rgba(168,85,247,0.15);
+        border-color: rgba(168,85,247,0.4);
+        transform: translateY(-5px);
+    }
+
+    /* Category Filters */
+    .category-filters {
+        padding: 40px 80px 20px;
+        background: radial-gradient(circle at 10% 20%, rgba(26,0,79,1) 0%, rgba(59,10,130,1) 100%);
+    }
+    .filter-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    .filter-btn {
+        background: rgba(168,85,247,0.1);
+        border: 1px solid rgba(168,85,247,0.3);
+        padding: 12px 30px;
+        border-radius: 50px;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        font-weight: 600;
+        position: relative;
+        overflow: hidden;
+    }
+    .filter-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #a855f7, #7c3aed);
+        transition: left 0.3s ease;
+        z-index: -1;
+    }
+    .filter-btn.active, .filter-btn:hover {
+        background: linear-gradient(135deg, #a855f7, #7c3aed);
+        border-color: transparent;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(168,85,247,0.4);
+        color: white;
+    }
+    .filter-btn.active::before,
+    .filter-btn:hover::before {
+        left: 0;
+    }
+
+    /* Projects Section */
+    .projects-section {
+        padding: 60px 80px;
+        background: radial-gradient(circle at 80% 30%, #0a0f2c, #020617);
+    }
+    .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #fff, #c084fc);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    .section-subtitle {
+        text-align: center;
+        color: #94a3b8;
+        margin-bottom: 50px;
+        font-size: 1.1rem;
+    }
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 35px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+    .project-card {
+        background: rgba(255,255,255,0.04);
+        backdrop-filter: blur(12px);
+        border-radius: 28px;
+        padding: 35px;
+        border: 1px solid rgba(168,85,247,0.25);
+        transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        position: relative;
+        overflow: hidden;
+        animation: fadeInScale 0.6s ease;
+        display: flex;
+        flex-direction: column;
+    }
+    @keyframes fadeInScale {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+    }
+    .project-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(168,85,247,0.1) 0%, transparent 70%);
+        transition: all 0.6s ease;
+        pointer-events: none;
+        z-index: 0;
+    }
+    .project-card > * {
+        position: relative;
+        z-index: 1;
+    }
+    .project-card:hover {
+        transform: translateY(-15px);
+        border-color: #a855f7;
+        box-shadow: 0 25px 50px rgba(168,85,247,0.25);
+        background: rgba(255,255,255,0.06);
+    }
+    .project-card:hover::before {
+        right: -30%;
+        top: -30%;
+    }
+    .project-category {
+        display: inline-block;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+    .category-ai {
+        background: rgba(168,85,247,0.2);
+        color: #c084fc;
+        border: 1px solid rgba(168,85,247,0.4);
+    }
+    .category-saas {
+        background: rgba(34,197,94,0.2);
+        color: #4ade80;
+        border: 1px solid rgba(34,197,94,0.4);
+    }
+    .project-icon {
+        font-size: 3rem;
+        color: #a855f7;
+        margin-bottom: 20px;
+    }
+    .project-card h3 {
+        font-size: 1.6rem;
+        margin-bottom: 15px;
+        color: #f1f5f9;
+    }
+    .project-card p {
+        color: #94a3b8;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+    .project-status {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 25px;
+        padding: 10px 0;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        border-radius: 30px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+    .status-development {
+        background: rgba(245,158,11,0.2);
+        color: #fbbf24;
+        border: 1px solid rgba(245,158,11,0.4);
+    }
+    .status-beta {
+        background: rgba(34,197,94,0.2);
+        color: #4ade80;
+        border: 1px solid rgba(34,197,94,0.4);
+    }
+
+    /* Loading Animation */
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    .loading {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(255,255,255,0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+
+    .waitlist-btn {
+        width: 100%;
+        padding: 12px;
+        background: rgba(168,85,247,0.15);
+        border: 1px solid rgba(168,85,247,0.4);
+        border-radius: 40px;
+        color: #c084fc;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        position: relative;
+        overflow: hidden;
+    }
+    .waitlist-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #a855f7, #7c3aed);
+        transition: left 0.3s ease;
+        z-index: -1;
+    }
+    .waitlist-btn:hover {
+        background: #a855f7;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(168,85,247,0.3);
+    }
+    .waitlist-btn:active {
+        transform: translateY(0);
+    }
+
+    /* Waitlist Modal */
+    .waitlist-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.9);
+        backdrop-filter: blur(12px);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+    }
+    .modal-content {
+        background: var(--bg3, #020617);
+        border-radius: 32px;
+        max-width: 500px;
+        width: 90%;
+        padding: 40px;
+        text-align: center;
+        border: 1px solid rgba(168,85,247,0.4);
+        animation: modalFadeIn 0.3s ease;
+    }
+    @keyframes modalFadeIn {
+        from { opacity: 0; transform: scale(0.9) translateY(-20px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* Improvement: Shake animation for errors */
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
+    
+    .modal-error {
+        animation: shake 0.4s ease-in-out;
+        border-color: #ef4444 !important;
+    }
+
+    .modal-content h3 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+        color: #f1f5f9;
+    }
+    .modal-content p {
+        color: #94a3b8;
+        margin-bottom: 25px;
+    }
+    .modal-input {
+        width: 100%;
+        padding: 14px 18px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(168,85,247,0.3);
+        border-radius: 16px;
+        color: white;
+        margin-bottom: 20px;
+        outline: none;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+    }
+    .modal-input::placeholder {
+        color: #64748b;
+    }
+    .modal-input:focus {
+        background: rgba(255,255,255,0.08);
+        border-color: #a855f7;
+        box-shadow: 0 0 15px rgba(168,85,247,0.2);
+    }
+    .modal-input:valid {
+        border-color: rgba(34,197,94,0.4);
+    }
+
+    .modal-submit {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #a855f7, #7c3aed);
+        border: none;
+        border-radius: 40px;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        position: relative;
+        overflow: hidden;
+    }
+    .modal-submit::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: rgba(255,255,255,0.1);
+        transition: left 0.3s ease;
+    }
+    .modal-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(168,85,247,0.4);
+    }
+    .modal-submit:hover::before {
+        left: 100%;
+    }
+    .modal-submit:active {
+        transform: translateY(0);
+    }
+    .modal-submit:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .modal-close {
+        margin-top: 15px;
+        background: transparent;
+        border: 1px solid rgba(168,85,247,0.3);
+        color: #94a3b8;
+        transition: all 0.3s ease;
+    }
+    .modal-close:hover {
+        border-color: #a855f7;
+        color: white;
+        background: rgba(168,85,247,0.1);
+    }
+
+    /* CTA Section */
+    .cta-innovation {
+        padding: 80px;
+        background: linear-gradient(135deg, #1a004f, #0a0f2c);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .cta-innovation::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: repeating-linear-gradient(45deg, rgba(168,85,247,0.05) 0px, rgba(168,85,247,0.05) 2px, transparent 2px, transparent 10px);
+        pointer-events: none;
+    }
+    .cta-content {
+        position: relative;
+        z-index: 2;
+    }
+    .cta-innovation h2 {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        background: linear-gradient(135deg, #fff, #c084fc);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    .cta-innovation p {
+        color: #94a3b8;
+        margin-bottom: 30px;
+        font-size: 1.1rem;
+    }
+    .cta-group {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    .cta-primary {
+        background: linear-gradient(135deg, #a855f7, #7c3aed);
+        padding: 16px 40px;
+        border-radius: 50px;
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+        overflow: hidden;
+        border: 2px solid transparent;
+    }
+    .cta-primary::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+    .cta-primary:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 15px 40px rgba(168,85,247,0.4);
+    }
+    .cta-primary:hover::before {
+        width: 400px;
+        height: 400px;
+    }
+
+    .cta-secondary {
+        background: transparent;
+        border: 2px solid #a855f7;
+        padding: 14px 38px;
+        border-radius: 50px;
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        position: relative;
+        overflow: hidden;
+    }
+    .cta-secondary::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: rgba(168,85,247,0.1);
+        transition: left 0.3s ease;
+        z-index: -1;
+    }
+    .cta-secondary:hover {
+        background: rgba(168,85,247,0.15);
+        transform: translateY(-4px);
+        border-color: #c084fc;
+        box-shadow: 0 10px 30px rgba(168,85,247,0.2);
+    }
+    .cta-secondary:hover::before {
+        left: 0;
+    }
+
+    /* Notification Animations */
+    @keyframes slideInRight {
+        from { 
+            opacity: 0; 
+            transform: translateX(30px);
+        }
+        to { 
+            opacity: 1; 
+            transform: translateX(0);
+        }
+    }
+    
+    @keyframes slideOutRight {
+        from { 
+            opacity: 1; 
+            transform: translateX(0);
+        }
+        to { 
+            opacity: 0; 
+            transform: translateX(30px);
+        }
+    }
+
+    /* Responsive */
+    @media (max-width: 1000px) {
+        .innovation-hero { padding: 70px 30px; }
+        .innovation-hero h1 { font-size: 2.8rem; }
+        .intro-section, .projects-section, .category-filters, .cta-innovation { padding: 50px 30px; }
+        .vision-statement h2 { font-size: 2rem; }
+        .projects-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 650px) {
+        .innovation-hero h1 { font-size: 2rem; }
+        .vision-statement h2 { font-size: 1.6rem; }
+        .project-card h3 { font-size: 1.3rem; }
+        .cta-innovation h2 { font-size: 1.8rem; }
+        .filter-btn { padding: 8px 20px; font-size: 0.9rem; }
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="innovation-hero fade-in">
+    <div class="hero-badge">
+        <i class="fas fa-flask"></i> Innovation Lab
+    </div>
+    <h1>What We're Building</h1>
+    <p>Exploring the frontier of technology — AI-powered solutions, next-gen SaaS platforms, and breakthrough innovations that will shape tomorrow.</p>
+</section>
+
+<!-- Intro Section -->
+<section class="intro-section fade-in">
+    <div class="vision-statement">
+        <h2>Our Innovation Vision</h2>
+        <p>At AY Technology's Innovation Lab, we're not just following trends — we're creating them. Our dedicated R&D team works on cutting-edge projects that push the boundaries of what's possible with artificial intelligence, cloud computing, and modern software architecture.</p>
+        <div class="vision-stats">
+            <div class="vision-stat">
+                <div class="number">15+</div>
+                <div class="label">Active Projects</div>
+            </div>
+            <div class="vision-stat">
+                <div class="number">8</div>
+                <div class="label">Patents Pending</div>
+            </div>
+            <div class="vision-stat">
+                <div class="number">50+</div>
+                <div class="label">Researchers</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Category Filters -->
+<section class="category-filters fade-in">
+    <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">All Projects</button>
+        <button class="filter-btn" data-filter="ai">🤖 AI Projects</button>
+        <button class="filter-btn" data-filter="saas">☁️ SaaS Platforms</button>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section class="projects-section fade-in">
+    <h2 class="section-title">Groundbreaking Projects</h2>
+    <p class="section-subtitle">Discover what our team is building right now</p>
+    
+    <div class="projects-grid" id="projectsGrid">
+        <!-- Project 1 - AI -->
+        <div class="project-card" data-category="ai">
+            <div class="project-category category-ai">
+                <i class="fas fa-brain"></i> AI Project
+            </div>
+            <div class="project-icon">
+                <i class="fas fa-robot"></i>
+            </div>
+            <h3>Nexus AI</h3>
+            <p>Enterprise-grade AI orchestration platform that connects LLMs, custom models, and business data for intelligent automation across departments.</p>
+            <div class="project-status">
+                <span class="status-badge status-development">
+                    <i class="fas fa-code"></i> In Development
+                </span>
+                <span>Expected: Q3 2026</span>
+            </div>
+            <button class="waitlist-btn" onclick="openWaitlist('Nexus AI')">
+                <i class="fas fa-bell"></i> Join Waitlist
+            </button>
+        </div>
+
+        <!-- Project 2 - SaaS -->
+        <div class="project-card" data-category="saas">
+            <div class="project-category category-saas">
+                <i class="fas fa-cloud"></i> SaaS Platform
+            </div>
+            <div class="project-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>PredictFlow</h3>
+            <p>AI-powered predictive analytics SaaS for e-commerce businesses. Forecast demand, optimize inventory, and maximize revenue with 95% accuracy.</p>
+            <div class="project-status">
+                <span class="status-badge status-beta">
+                    <i class="fas fa-flask"></i> Beta Access
+                </span>
+                <span>Limited spots available</span>
+            </div>
+            <button class="waitlist-btn" onclick="openWaitlist('PredictFlow')">
+                <i class="fas fa-bell"></i> Join Waitlist
+            </button>
+        </div>
+
+        <!-- Project 3 - AI -->
+        <div class="project-card" data-category="ai">
+            <div class="project-category category-ai">
+                <i class="fas fa-brain"></i> AI Project
+            </div>
+            <div class="project-icon">
+                <i class="fas fa-comment-dots"></i>
+            </div>
+            <h3>OmniChat</h3>
+            <p>Multimodal AI assistant that understands text, voice, images, and video. Built for customer support, sales automation, and internal knowledge management.</p>
+            <div class="project-status">
+                <span class="status-badge status-beta">
+                    <i class="fas fa-flask"></i> Beta Access
+                </span>
+                <span>Private beta - Apply now</span>
+            </div>
+            <button class="waitlist-btn" onclick="openWaitlist('OmniChat')">
+                <i class="fas fa-bell"></i> Join Waitlist
+            </button>
+        </div>
+
+        <!-- Project 4 - SaaS -->
+        <div class="project-card" data-category="saas">
+            <div class="project-category category-saas">
+                <i class="fas fa-cloud"></i> SaaS Platform
+            </div>
+            <div class="project-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>SecurAI</h3>
+            <p>AI-driven cybersecurity platform that detects and responds to threats in real-time. Zero-trust architecture with automated incident response.</p>
+            <div class="project-status">
+                <span class="status-badge status-development">
+                    <i class="fas fa-code"></i> In Development
+                </span>
+                <span>Launching Q1 2027</span>
+            </div>
+            <button class="waitlist-btn" onclick="openWaitlist('SecurAI')">
+                <i class="fas fa-bell"></i> Join Waitlist
+            </button>
+        </div>
+
+        <!-- Project 5 - AI -->
+        <div class="project-card" data-category="ai">
+            <div class="project-category category-ai">
+                <i class="fas fa-brain"></i> AI Project
+            </div>
+            <div class="project-icon">
+                <i class="fas fa-chart-simple"></i>
+            </div>
+            <h3>InsightEngine</h3>
+            <p>Advanced business intelligence platform that transforms raw data into actionable insights using natural language queries and automated pattern recognition.</p>
+            <div class="project-status">
+                <span class="status-badge status-beta">
+                    <i class="fas fa-flask"></i> Beta Access
+                </span>
+                <span>Early access program</span>
+            </div>
+            <button class="waitlist-btn" onclick="openWaitlist('InsightEngine')">
+                <i class="fas fa-bell"></i> Join Waitlist
+            </button>
+        </div>
+
+        <!-- Project 6 - SaaS -->
+        <div class="project-card" data-category="saas">
+            <div class="project-category category-saas">
+                <i class="fas fa-cloud"></i> SaaS Platform
+            </div>
+            <div class="project-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>TeamSync AI</h3>
+            <p>Intelligent collaboration platform that optimizes team workflows, predicts project bottlenecks, and automates routine tasks using AI agents.</p>
+            <div class="project-status">
+                <span class="status-badge status-development">
+                    <i class="fas fa-code"></i> In Development
+                </span>
+                <span>Demo available</span>
+            </div>
+            <button class="waitlist-btn" onclick="openWaitlist('TeamSync AI')">
+                <i class="fas fa-bell"></i> Join Waitlist
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Waitlist Modal -->
+<div id="waitlistModal" class="waitlist-modal">
+    <div class="modal-content">
+        <i class="fas fa-flask" style="font-size: 3rem; color: #a855f7; margin-bottom: 15px;"></i>
+        <h3 id="modalProjectName">Join Waitlist</h3>
+        <p>Be the first to know when this project launches. Get exclusive early access and special launch offers.</p>
+        <input type="email" id="waitlistEmail" class="modal-input" placeholder="Your email address" required>
+        <input type="text" id="waitlistName" class="modal-input" placeholder="Your name">
+        <button class="modal-submit" onclick="submitWaitlist()">
+            <i class="fas fa-bell"></i> Join Waitlist
+        </button>
+        <button class="modal-submit modal-close" onclick="closeWaitlist()">Cancel</button>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<section class="cta-innovation fade-in">
+    <div class="cta-content">
+        <h2>Shape the Future With Us</h2>
+        <p>Partner with our innovation lab — invest, collaborate, or become an early adopter</p>
+        <div class="cta-group">
+            <a href="/contact" class="cta-primary">
+                <i class="fas fa-handshake"></i> Partner With Us
+            </a>
+            <a href="#" class="cta-secondary" onclick="openNewsletter()">
+                <i class="fas fa-newspaper"></i> Subscribe to Updates
+            </a>
+        </div>
+    </div>
+</section>
+
+<script>
+    let currentProject = '';
+
+    // Category filtering
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const projects = document.querySelectorAll('.project-card');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Update active button
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const filter = btn.getAttribute('data-filter');
+            
+            // Filter projects
+            projects.forEach(project => {
+                if (filter === 'all' || project.getAttribute('data-category') === filter) {
+                    project.style.display = 'block';
+                    project.style.animation = 'fadeInScale 0.5s ease';
+                } else {
+                    project.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    // Waitlist modal functions
+    function openWaitlist(projectName) {
+        currentProject = projectName;
+        document.getElementById('modalProjectName').innerHTML = `Join Waitlist - ${projectName}`;
+        document.getElementById('waitlistModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeWaitlist() {
+        document.getElementById('waitlistModal').style.display = 'none';
+        document.body.style.overflow = '';
+        document.getElementById('waitlistEmail').value = '';
+        document.getElementById('waitlistName').value = '';
+    }
+
+    function submitWaitlist() {
+        const email = document.getElementById('waitlistEmail').value.trim();
+        const name = document.getElementById('waitlistName').value.trim();
+        const emailInput = document.getElementById('waitlistEmail');
+        const submitBtn = document.querySelector('.modal-submit');
+        
+        // Reset previous error state
+        emailInput.classList.remove('modal-error');
+        
+        if (!email) {
+            emailInput.classList.add('modal-error');
+            emailInput.focus();
+            showNotification('Please enter your email address', 'error');
+            return;
+        }
+        
+        // Better email validation regex
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            emailInput.classList.add('modal-error');
+            emailInput.focus();
+            showNotification('Please enter a valid email address', 'error');
+            return;
+        }
+        
+        // Show loading state
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<div class="loading"></div> Submitting...';
+        submitBtn.disabled = true;
+        
+        // Simulate API call with better UX feedback
+        setTimeout(() => {
+            closeWaitlist();
+            showNotification(`✅ You're all set!\n\nWe'll notify you at ${email} when early access is available for ${currentProject}.`, 'success');
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }, 1200);
+        
+        // In production, send to backend:
+        // fetch('/api/waitlist/', {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({ project: currentProject, email: email, name: name })
+        // }).catch(err => {
+        //     showNotification('Error joining waitlist. Please try again.', 'error');
+        //     submitBtn.innerHTML = originalText;
+        //     submitBtn.disabled = false;
+        // });
+    }
+
+    function showNotification(message, type = 'info') {
+        // Remove existing notifications
+        const existingNotif = document.querySelector('.notification');
+        if (existingNotif) existingNotif.remove();
+        
+        const notif = document.createElement('div');
+        notif.className = `notification notification-${type}`;
+        notif.innerHTML = message;
+        notif.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${type === 'success' ? 'rgba(34,197,94,0.9)' : 'rgba(239,68,68,0.9)'};
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            z-index: 10000;
+            animation: slideInRight 0.4s ease;
+            max-width: 400px;
+        `;
+        document.body.appendChild(notif);
+        
+        setTimeout(() => {
+            notif.style.animation = 'slideOutRight 0.4s ease';
+            setTimeout(() => notif.remove(), 400);
+        }, 3000);
+    }
+
+    function openNewsletter() {
+        showNotification('📧 Subscribe to Innovation Updates\n\nGet monthly updates about our latest projects and early access opportunities.\n\nVisit our contact page to subscribe.', 'info');
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('waitlistModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeWaitlist();
+        }
+    });
+
+    // Fade-in animation
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    fadeElements.forEach(el => observer.observe(el));
+    
+    // Add visible class to body on load
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.fade-in').forEach(el => {
+            if (el.getBoundingClientRect().top < window.innerHeight) {
+                el.classList.add('visible');
+            }
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,677 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+
+{% load static %}
+
+{% block meta_tags %}
+<meta name="description" content="Stay updated with the latest insights, trends, and news from AY Technology. Read our blog on AI, Cloud Computing, Cybersecurity, Web Development, and more.">
+<meta name="keywords" content="blog, technology blog, AI blog, cloud computing, cybersecurity, web development, tech insights">
+<meta property="og:title" content="Blog | AY Technology - Insights & Updates">
+<meta property="og:description" content="Expert insights on technology trends, best practices, and industry updates.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="index, follow">
+{% endblock %}
+
+<style>
+    /* Blog Page Styles */
+    .blog-hero {
+        padding: 100px 80px;
+        text-align: center;
+        background: radial-gradient(circle at 30% 10%, rgba(26,0,79,1) 0%, rgba(59,10,130,1) 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    .blog-hero h1 {
+        font-size: 3.8rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #ffffff, #c084fc, #a855f7);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 20px;
+        animation: fadeInUp 0.8s ease;
+    }
+    .blog-hero p {
+        font-size: 1.2rem;
+        color: #cbd5e1;
+        max-width: 700px;
+        margin: 0 auto;
+        animation: fadeInUp 0.8s ease 0.2s backwards;
+    }
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .blog-hero::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(168,85,247,0.1) 0%, transparent 70%);
+        animation: rotate 20s linear infinite;
+    }
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    /* Main Blog Section */
+    .blog-main {
+        padding: 60px 80px;
+        background: radial-gradient(circle at 80% 30%, #0a0f2c, #020617);
+    }
+    .blog-container {
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 50px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    /* Blog Grid */
+    .blog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 35px;
+    }
+    .blog-card {
+        background: rgba(255,255,255,0.04);
+        backdrop-filter: blur(12px);
+        border-radius: 28px;
+        overflow: hidden;
+        border: 1px solid rgba(168,85,247,0.25);
+        transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        cursor: pointer;
+    }
+    .blog-card:hover {
+        transform: translateY(-10px);
+        border-color: #a855f7;
+        box-shadow: 0 20px 40px rgba(168,85,247,0.25);
+    }
+    .blog-image {
+        height: 220px;
+        background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(124,58,237,0.1));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+        color: #a855f7;
+        position: relative;
+        overflow: hidden;
+    }
+    .blog-image::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        transition: left 0.5s;
+    }
+    .blog-card:hover .blog-image::after {
+        left: 100%;
+    }
+    .blog-content {
+        padding: 25px;
+    }
+    .blog-category {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+    .category-ai { background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.3); }
+    .category-cloud { background: rgba(59,130,246,0.2); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+    .category-security { background: rgba(239,68,68,0.2); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+    .category-dev { background: rgba(34,197,94,0.2); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+    .category-design { background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); }
+    
+    .blog-card h3 {
+        font-size: 1.4rem;
+        margin-bottom: 12px;
+        color: #f1f5f9;
+        line-height: 1.4;
+    }
+    .blog-meta {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 15px;
+        font-size: 0.8rem;
+        color: #64748b;
+    }
+    .blog-meta i {
+        margin-right: 5px;
+    }
+    .blog-excerpt {
+        color: #94a3b8;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+    .read-more {
+        color: #c084fc;
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: gap 0.3s;
+    }
+    .read-more:hover {
+        gap: 12px;
+    }
+
+    /* Sidebar */
+    .blog-sidebar {
+        position: sticky;
+        top: 100px;
+        height: fit-content;
+    }
+    .sidebar-widget {
+        background: rgba(255,255,255,0.04);
+        backdrop-filter: blur(12px);
+        border-radius: 24px;
+        padding: 25px;
+        margin-bottom: 30px;
+        border: 1px solid rgba(168,85,247,0.25);
+    }
+    .sidebar-widget h3 {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+        color: #f1f5f9;
+        position: relative;
+        display: inline-block;
+    }
+    .sidebar-widget h3::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background: #a855f7;
+    }
+    
+    /* Search Box */
+    .search-box {
+        display: flex;
+        gap: 10px;
+    }
+    .search-box input {
+        flex: 1;
+        padding: 12px 15px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(168,85,247,0.3);
+        border-radius: 40px;
+        color: white;
+        outline: none;
+    }
+    .search-box input:focus {
+        border-color: #a855f7;
+    }
+    .search-box button {
+        background: linear-gradient(135deg, #a855f7, #7c3aed);
+        border: none;
+        width: 45px;
+        border-radius: 50%;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .search-box button:hover {
+        transform: scale(1.05);
+    }
+    
+    /* Category List */
+    .category-list {
+        list-style: none;
+    }
+    .category-list li {
+        margin-bottom: 12px;
+    }
+    .category-list a {
+        color: #94a3b8;
+        text-decoration: none;
+        display: flex;
+        justify-content: space-between;
+        transition: 0.3s;
+        padding: 8px 0;
+    }
+    .category-list a:hover {
+        color: #c084fc;
+        transform: translateX(5px);
+    }
+    .category-count {
+        color: #64748b;
+        font-size: 0.8rem;
+    }
+    
+    /* Recent Posts */
+    .recent-post {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .recent-post:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    .recent-icon {
+        width: 50px;
+        height: 50px;
+        background: rgba(168,85,247,0.15);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: #a855f7;
+    }
+    .recent-info h4 {
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+        color: #f1f5f9;
+    }
+    .recent-info p {
+        font-size: 0.7rem;
+        color: #64748b;
+    }
+    .recent-info a {
+        color: inherit;
+        text-decoration: none;
+    }
+    .recent-info a:hover {
+        color: #c084fc;
+    }
+    
+    /* Newsletter */
+    .newsletter-form input {
+        width: 100%;
+        padding: 12px 15px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(168,85,247,0.3);
+        border-radius: 40px;
+        color: white;
+        margin-bottom: 15px;
+        outline: none;
+    }
+    .newsletter-form input:focus {
+        border-color: #a855f7;
+    }
+    .newsletter-form button {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(135deg, #a855f7, #7c3aed);
+        border: none;
+        border-radius: 40px;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .newsletter-form button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(168,85,247,0.4);
+    }
+
+    /* Pagination */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 50px;
+        flex-wrap: wrap;
+    }
+    .page-link {
+        padding: 10px 16px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(168,85,247,0.3);
+        border-radius: 40px;
+        color: white;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+    .page-link:hover, .page-link.active {
+        background: linear-gradient(135deg, #a855f7, #7c3aed);
+        border-color: transparent;
+    }
+
+    /* Featured Post */
+    .featured-post {
+        margin-bottom: 50px;
+        background: linear-gradient(135deg, rgba(168,85,247,0.1), rgba(124,58,237,0.05));
+        border-radius: 32px;
+        padding: 40px;
+        border: 1px solid rgba(168,85,247,0.3);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: center;
+    }
+    .featured-content h2 {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        color: #f1f5f9;
+    }
+    .featured-badge {
+        display: inline-block;
+        background: #a855f7;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        margin-bottom: 15px;
+    }
+    .featured-icon {
+        text-align: center;
+        font-size: 6rem;
+        color: #a855f7;
+    }
+
+    /* Responsive */
+    @media (max-width: 1000px) {
+        .blog-hero { padding: 60px 30px; }
+        .blog-hero h1 { font-size: 2.5rem; }
+        .blog-main { padding: 40px 30px; }
+        .blog-container { grid-template-columns: 1fr; gap: 40px; }
+        .featured-post { grid-template-columns: 1fr; text-align: center; }
+    }
+    @media (max-width: 650px) {
+        .blog-hero h1 { font-size: 2rem; }
+        .blog-grid { grid-template-columns: 1fr; }
+        .featured-content h2 { font-size: 1.5rem; }
+        .sidebar-widget { padding: 20px; }
+    }
+
+    .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="blog-hero fade-in">
+    <h1>Insights & Updates</h1>
+    <p>Expert perspectives on technology trends, best practices, and industry news from our team of specialists.</p>
+</section>
+
+<!-- Main Blog Section -->
+<section class="blog-main fade-in">
+    <div class="blog-container">
+        <!-- Blog Posts Grid -->
+        <div class="blog-content-area">
+            <!-- Featured Post -->
+            <div class="featured-post" onclick="location.href='{% url 'core:blog' %}'">
+                <div class="featured-content">
+                    <span class="featured-badge">🔥 Featured Article</span>
+                    <h2>The Complete Guide to Digital Transformation in 2026</h2>
+                    <div class="blog-meta">
+                        <span><i class="fas fa-calendar"></i> April 1, 2026</span>
+                        <span><i class="fas fa-user"></i> Arjun Mehta</span>
+                        <span><i class="fas fa-clock"></i> 12 min read</span>
+                    </div>
+                    <p style="color: #94a3b8;">A comprehensive guide to navigating digital transformation, from strategy to execution, with actionable insights for business leaders.</p>
+                    <span class="read-more">Read Featured Article <i class="fas fa-arrow-right"></i></span>
+                </div>
+                <div class="featured-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+            </div>
+
+            <!-- Regular Blog Grid -->
+            <div class="blog-grid" id="blogGrid">
+                <!-- Post 1 -->
+                <div class="blog-card" onclick="location.href='{% url 'core:blog' %}'">
+                    <div class="blog-image"><i class="fas fa-robot"></i></div>
+                    <div class="blog-content">
+                        <span class="blog-category category-ai">🤖 AI & Machine Learning</span>
+                        <h3>The Future of AI in Enterprise: What to Expect in 2026</h3>
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> March 25, 2026</span>
+                            <span><i class="fas fa-user"></i> Priya Sharma</span>
+                        </div>
+                        <p class="blog-excerpt">Discover how generative AI, LLMs, and autonomous agents are reshaping business operations across industries...</p>
+                        <span class="read-more">Read More <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+
+                <!-- Post 2 -->
+                <div class="blog-card" onclick="location.href='{% url 'core:blog' %}'">
+                    <div class="blog-image"><i class="fas fa-cloud-upload-alt"></i></div>
+                    <div class="blog-content">
+                        <span class="blog-category category-cloud">☁️ Cloud Computing</span>
+                        <h3>Cloud Migration Best Practices for Enterprise Success</h3>
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> March 18, 2026</span>
+                            <span><i class="fas fa-user"></i> Vikram Singh</span>
+                        </div>
+                        <p class="blog-excerpt">Learn the essential strategies for a smooth cloud migration that minimizes downtime and maximizes ROI...</p>
+                        <span class="read-more">Read More <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+
+                <!-- Post 3 -->
+                <div class="blog-card" onclick="location.href='{% url 'core:blog' %}'">
+                    <div class="blog-image"><i class="fas fa-shield-alt"></i></div>
+                    <div class="blog-content">
+                        <span class="blog-category category-security">🔒 Cybersecurity</span>
+                        <h3>Implementing Zero-Trust Security in Your Organization</h3>
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> March 10, 2026</span>
+                            <span><i class="fas fa-user"></i> Rahul Verma</span>
+                        </div>
+                        <p class="blog-excerpt">Step-by-step guide to implementing zero-trust architecture and protecting against modern cyber threats...</p>
+                        <span class="read-more">Read More <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+
+                <!-- Post 4 -->
+                <div class="blog-card" onclick="location.href='{% url 'core:blog' %}'">
+                    <div class="blog-image"><i class="fab fa-react"></i></div>
+                    <div class="blog-content">
+                        <span class="blog-category category-dev">💻 Web Development</span>
+                        <h3>Modern Web Development: Next.js vs Remix vs Astro</h3>
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> March 5, 2026</span>
+                            <span><i class="fas fa-user"></i> Neha Gupta</span>
+                        </div>
+                        <p class="blog-excerpt">Comparing the latest web frameworks to help you choose the right technology for your next project...</p>
+                        <span class="read-more">Read More <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+
+                <!-- Post 5 -->
+                <div class="blog-card" onclick="location.href='{% url 'core:blog' %}'">
+                    <div class="blog-image"><i class="fas fa-mobile-alt"></i></div>
+                    <div class="blog-content">
+                        <span class="blog-category category-dev">📱 Mobile Development</span>
+                        <h3>Flutter vs React Native: Which One to Choose in 2026?</h3>
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> February 25, 2026</span>
+                            <span><i class="fas fa-user"></i> Anjali Nair</span>
+                        </div>
+                        <p class="blog-excerpt">Deep dive comparison of the leading cross-platform mobile frameworks to help you make an informed decision...</p>
+                        <span class="read-more">Read More <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+
+                <!-- Post 6 -->
+                <div class="blog-card" onclick="location.href='{% url 'core:blog' %}'">
+                    <div class="blog-image"><i class="fas fa-palette"></i></div>
+                    <div class="blog-content">
+                        <span class="blog-category category-design">🎨 UI/UX Design</span>
+                        <h3>Design Systems: Creating Consistent User Experiences</h3>
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> February 18, 2026</span>
+                            <span><i class="fas fa-user"></i> Design Team</span>
+                        </div>
+                        <p class="blog-excerpt">How to build and maintain design systems that scale across products and teams...</p>
+                        <span class="read-more">Read More <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <a href="#" class="page-link active">1</a>
+                <a href="#" class="page-link">2</a>
+                <a href="#" class="page-link">3</a>
+                <a href="#" class="page-link">Next →</a>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="blog-sidebar">
+            <!-- Search Widget -->
+            <div class="sidebar-widget">
+                <h3>Search</h3>
+                <div class="search-box">
+                    <input type="text" placeholder="Search articles..." id="searchInput">
+                    <button onclick="searchArticles()"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+
+            <!-- Categories Widget -->
+            <div class="sidebar-widget">
+                <h3>Categories</h3>
+                <ul class="category-list">
+                    <li><a href="#">🤖 AI & Machine Learning <span class="category-count">(12)</span></a></li>
+                    <li><a href="#">☁️ Cloud Computing <span class="category-count">(8)</span></a></li>
+                    <li><a href="#">🔒 Cybersecurity <span class="category-count">(10)</span></a></li>
+                    <li><a href="#">💻 Web Development <span class="category-count">(15)</span></a></li>
+                    <li><a href="#">📱 Mobile Development <span class="category-count">(6)</span></a></li>
+                    <li><a href="#">🎨 UI/UX Design <span class="category-count">(7)</span></a></li>
+                    <li><a href="#">📊 Digital Transformation <span class="category-count">(9)</span></a></li>
+                </ul>
+            </div>
+
+            <!-- Recent Posts Widget -->
+            <div class="sidebar-widget">
+                <h3>Recent Posts</h3>
+                <div class="recent-post">
+                    <div class="recent-icon"><i class="fas fa-robot"></i></div>
+                    <div class="recent-info">
+                        <h4><a href="#">The Future of AI in Enterprise</a></h4>
+                        <p>March 25, 2026</p>
+                    </div>
+                </div>
+                <div class="recent-post">
+                    <div class="recent-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                    <div class="recent-info">
+                        <h4><a href="#">Cloud Migration Best Practices</a></h4>
+                        <p>March 18, 2026</p>
+                    </div>
+                </div>
+                <div class="recent-post">
+                    <div class="recent-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div class="recent-info">
+                        <h4><a href="#">Zero-Trust Security Framework</a></h4>
+                        <p>March 10, 2026</p>
+                    </div>
+                </div>
+                <div class="recent-post">
+                    <div class="recent-icon"><i class="fab fa-react"></i></div>
+                    <div class="recent-info">
+                        <h4><a href="#">Modern Web Development</a></h4>
+                        <p>March 5, 2026</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Newsletter Widget -->
+            <div class="sidebar-widget">
+                <h3>Newsletter</h3>
+                <p style="color: #94a3b8; margin-bottom: 15px;">Get the latest insights delivered to your inbox</p>
+                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit">Subscribe →</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Search functionality
+    function searchArticles() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        const blogCards = document.querySelectorAll('.blog-card');
+        
+        blogCards.forEach(card => {
+            const title = card.querySelector('h3').innerText.toLowerCase();
+            const excerpt = card.querySelector('.blog-excerpt').innerText.toLowerCase();
+            
+            if (title.includes(searchTerm) || excerpt.includes(searchTerm)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // Newsletter subscription
+    function subscribeNewsletter(event) {
+        event.preventDefault();
+        const email = event.target.querySelector('input').value;
+        
+        // Simulate API call
+        alert(`Thank you for subscribing!\nWe'll send updates to ${email}`);
+        event.target.reset();
+    }
+
+    // Category filtering
+    document.querySelectorAll('.category-list a').forEach(categoryLink => {
+        categoryLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            const categoryText = this.innerText.toLowerCase();
+            const blogCards = document.querySelectorAll('.blog-card');
+            
+            blogCards.forEach(card => {
+                const cardCategory = card.querySelector('.blog-category').innerText.toLowerCase();
+                if (cardCategory.includes(categoryText.split(' ')[0]) || categoryText === 'all') {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    // Fade-in animation
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    fadeElements.forEach(el => observer.observe(el));
+
+    // Update pagination active state on click
+    document.querySelectorAll('.page-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            if (!this.classList.contains('active')) {
+                e.preventDefault();
+                document.querySelectorAll('.page-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                // Scroll to top of blog section
+                document.querySelector('.blog-main').scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+</script>
+
+{% endblock %}

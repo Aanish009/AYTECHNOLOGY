@@ -1,0 +1,164 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+
+{% load static %}
+
+{% block meta_tags %}
+<meta name="description" content="AY Technology Research Lab - Exploring cutting-edge technologies including Quantum Computing, Edge AI, Blockchain, and Advanced Materials.">
+<meta name="keywords" content="research lab, quantum computing, edge AI, blockchain research, advanced materials, R&D">
+<meta property="og:title" content="Research Lab | AY Technology">
+<meta property="og:description" content="Pioneering breakthrough technologies for tomorrow's world.">
+<meta name="robots" content="index, follow">
+{% endblock %}
+
+<style>
+    .innovation-detail-hero {
+        padding: 100px 80px;
+        text-align: center;
+        background: radial-gradient(circle at 30% 10%, rgba(26,0,79,1) 0%, rgba(59,10,130,1) 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    .innovation-detail-hero h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #ffffff, #c084fc, #a855f7);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 20px;
+        animation: fadeInUp 0.8s ease;
+    }
+    .innovation-detail-hero p {
+        font-size: 1.2rem;
+        color: #cbd5e1;
+        max-width: 700px;
+        margin: 0 auto;
+        animation: fadeInUp 0.8s ease 0.2s backwards;
+    }
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .section-container {
+        padding: 80px;
+        background: radial-gradient(circle at 80% 30%, #0a0f2c, #020617);
+    }
+    .section-container-light {
+        padding: 80px;
+        background: radial-gradient(circle at 10% 20%, rgba(26,0,79,1) 0%, rgba(59,10,130,1) 100%);
+    }
+    .section-title {
+        font-size: 2.2rem;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #fff, #c084fc);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    .research-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 40px;
+        margin-top: 40px;
+    }
+    .research-card {
+        background: rgba(255,255,255,0.04);
+        backdrop-filter: blur(10px);
+        border-radius: 28px;
+        padding: 35px;
+        border: 1px solid rgba(168,85,247,0.25);
+        transition: all 0.3s;
+    }
+    .research-card:hover {
+        transform: translateY(-8px);
+        border-color: #a855f7;
+        box-shadow: 0 20px 40px rgba(168,85,247,0.2);
+    }
+    .research-icon {
+        font-size: 3rem;
+        color: #a855f7;
+        margin-bottom: 20px;
+    }
+    .research-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: #f1f5f9;
+    }
+    .research-status {
+        display: inline-block;
+        background: rgba(34,197,94,0.2);
+        color: #4ade80;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        margin-top: 15px;
+    }
+    @media (max-width: 1000px) {
+        .innovation-detail-hero { padding: 60px 30px; }
+        .innovation-detail-hero h1 { font-size: 2.5rem; }
+        .section-container, .section-container-light { padding: 50px 30px; }
+    }
+    @media (max-width: 650px) {
+        .innovation-detail-hero h1 { font-size: 2rem; }
+        .section-title { font-size: 1.8rem; }
+        .research-grid { grid-template-columns: 1fr; }
+    }
+    .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
+<section class="innovation-detail-hero fade-in">
+    <h1>Research Lab</h1>
+    <p>Exploring the frontiers of technology — where breakthrough ideas become reality</p>
+</section>
+
+<section class="section-container fade-in">
+    <h2 class="section-title">Active Research Areas</h2>
+    <div class="research-grid">
+        <div class="research-card">
+            <div class="research-icon"><i class="fas fa-microchip"></i></div>
+            <h3>Quantum Computing</h3>
+            <p>Developing quantum algorithms for complex optimization problems and cryptography research.</p>
+            <span class="research-status">🔬 In Research Phase</span>
+        </div>
+        <div class="research-card">
+            <div class="research-icon"><i class="fas fa-brain"></i></div>
+            <h3>Neuromorphic Computing</h3>
+            <p>Building brain-inspired computing architectures for energy-efficient AI processing.</p>
+            <span class="research-status">⚡ Prototype Stage</span>
+        </div>
+        <div class="research-card">
+            <div class="research-icon"><i class="fas fa-chart-line"></i></div>
+            <h3>Predictive Analytics</h3>
+            <p>Advanced time-series forecasting and anomaly detection algorithms.</p>
+            <span class="research-status">📊 Beta Testing</span>
+        </div>
+    </div>
+</section>
+
+<section class="section-container-light fade-in">
+    <h2 class="section-title" style="text-align: center;">Our Research Partners</h2>
+    <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 40px;">
+        <span class="tech-tag" style="background: rgba(168,85,247,0.15); padding: 12px 25px; border-radius: 40px;">Stanford University</span>
+        <span class="tech-tag" style="background: rgba(168,85,247,0.15); padding: 12px 25px; border-radius: 40px;">MIT CSAIL</span>
+        <span class="tech-tag" style="background: rgba(168,85,247,0.15); padding: 12px 25px; border-radius: 40px;">CERN OpenLab</span>
+    </div>
+</section>
+
+<script>
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    fadeElements.forEach(el => observer.observe(el));
+</script>
+
+{% endblock %}

@@ -1,0 +1,348 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+
+{% load static %}
+
+{% block meta_tags %}
+<meta name="description" content="Professional IT Consulting services by AY Technology. Digital transformation strategy, technology assessment, enterprise architecture, and IT roadmap planning.">
+<meta name="keywords" content="IT consulting, digital transformation, technology strategy, enterprise architecture, IT roadmap, technology assessment">
+<meta property="og:title" content="IT Consulting Services | AY Technology">
+<meta property="og:description" content="Strategic technology consulting to drive digital transformation and business growth.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="index, follow">
+{% endblock %}
+
+<style>
+    /* Same styles as above */
+    .service-detail-hero {
+        padding: 100px 80px;
+        background: radial-gradient(circle at 30% 10%, rgba(26,0,79,1) 0%, rgba(59,10,130,1) 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    .service-detail-hero h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #ffffff, #c084fc, #a855f7);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 20px;
+        animation: fadeInUp 0.8s ease;
+    }
+    .service-detail-hero p {
+        font-size: 1.2rem;
+        color: #cbd5e1;
+        max-width: 700px;
+        animation: fadeInUp 0.8s ease 0.2s backwards;
+    }
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .section-container {
+        padding: 80px;
+        background: radial-gradient(circle at 80% 30%, #0a0f2c, #020617);
+    }
+    .section-container-light {
+        padding: 80px;
+        background: radial-gradient(circle at 10% 20%, rgba(26,0,79,1) 0%, rgba(59,10,130,1) 100%);
+    }
+    .section-title {
+        font-size: 2.2rem;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #fff, #c084fc);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    .problem-solution-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+        align-items: center;
+    }
+    .problem-card, .solution-card {
+        background: rgba(255,255,255,0.04);
+        backdrop-filter: blur(10px);
+        border-radius: 28px;
+        padding: 40px;
+        border: 1px solid rgba(168,85,247,0.25);
+        transition: all 0.3s;
+    }
+    .problem-card:hover, .solution-card:hover {
+        transform: translateY(-5px);
+        border-color: #a855f7;
+    }
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+    }
+    .feature-item {
+        background: rgba(255,255,255,0.04);
+        border-radius: 20px;
+        padding: 30px;
+        text-align: center;
+        transition: all 0.3s;
+        border: 1px solid rgba(168,85,247,0.2);
+    }
+    .feature-item:hover {
+        transform: translateY(-8px);
+        background: rgba(168,85,247,0.08);
+        border-color: #a855f7;
+    }
+    .feature-item i {
+        font-size: 2.5rem;
+        color: #a855f7;
+        margin-bottom: 15px;
+    }
+    .case-studies-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+    }
+    .case-card {
+        background: rgba(255,255,255,0.04);
+        border-radius: 20px;
+        padding: 25px;
+        transition: all 0.3s;
+        border: 1px solid rgba(168,85,247,0.2);
+    }
+    .case-card:hover {
+        transform: translateY(-5px);
+        background: rgba(168,85,247,0.08);
+        border-color: #a855f7;
+    }
+    .faq-item {
+        background: rgba(255,255,255,0.04);
+        border-radius: 16px;
+        margin-bottom: 15px;
+        overflow: hidden;
+        border: 1px solid rgba(168,85,247,0.2);
+    }
+    .faq-question {
+        padding: 20px 25px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+    .faq-answer {
+        padding: 0 25px 25px;
+        display: none;
+        color: #94a3b8;
+        line-height: 1.6;
+    }
+    .faq-item.active .faq-answer {
+        display: block;
+    }
+    .cta-detail {
+        text-align: center;
+        padding: 60px;
+        background: linear-gradient(135deg, #1a004f, #0a0f2c);
+        border-radius: 40px;
+        margin-top: 40px;
+        border: 1px solid rgba(168,85,247,0.3);
+    }
+    .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 40px;
+        background: linear-gradient(135deg, #a855f7, #7c3aed);
+        border-radius: 50px;
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s;
+        margin-top: 20px;
+    }
+    .cta-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(168,85,247,0.4);
+        gap: 18px;
+    }
+    @media (max-width: 1000px) {
+        .service-detail-hero { padding: 60px 30px; }
+        .service-detail-hero h1 { font-size: 2.5rem; }
+        .section-container, .section-container-light { padding: 50px 30px; }
+        .problem-solution-grid { grid-template-columns: 1fr; gap: 30px; }
+    }
+    @media (max-width: 650px) {
+        .service-detail-hero h1 { font-size: 2rem; }
+        .section-title { font-size: 1.8rem; }
+        .cta-detail { padding: 30px 20px; }
+    }
+    .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="service-detail-hero fade-in">
+    <h1>IT Consulting Services</h1>
+    <p>Strategic technology guidance to drive digital transformation, optimize operations, and accelerate business growth.</p>
+</section>
+
+<!-- Problem Section -->
+<section class="section-container fade-in">
+    <div class="problem-solution-grid">
+        <div class="problem-card">
+            <i class="fas fa-exclamation-triangle" style="font-size: 2.5rem; color: #fbbf24; margin-bottom: 20px;"></i>
+            <h2 class="section-title">The Challenge</h2>
+            <p style="color: #cbd5e1; line-height: 1.7;">Business leaders struggle with technology decisions:</p>
+            <ul style="margin-top: 20px; color: #94a3b8; list-style: none;">
+                <li style="margin: 15px 0;"><i class="fas fa-times-circle" style="color: #f87171; margin-right: 10px;"></i> Unclear digital transformation roadmap</li>
+                <li style="margin: 15px 0;"><i class="fas fa-times-circle" style="color: #f87171; margin-right: 10px;"></i> Technology debt holding back innovation</li>
+                <li style="margin: 15px 0;"><i class="fas fa-times-circle" style="color: #f87171; margin-right: 10px;"></i> Difficulty choosing the right technology stack</li>
+                <li style="margin: 15px 0;"><i class="fas fa-times-circle" style="color: #f87171; margin-right: 10px;"></i> Inefficient processes and workflows</li>
+                <li style="margin: 15px 0;"><i class="fas fa-times-circle" style="color: #f87171; margin-right: 10px;"></i> Security and compliance gaps</li>
+            </ul>
+        </div>
+        <div class="solution-card">
+            <i class="fas fa-lightbulb" style="font-size: 2.5rem; color: #c084fc; margin-bottom: 20px;"></i>
+            <h2 class="section-title">Our Solution Approach</h2>
+            <p style="color: #cbd5e1; line-height: 1.7;">We provide strategic technology consulting:</p>
+            <ul style="margin-top: 20px; color: #94a3b8; list-style: none;">
+                <li style="margin: 15px 0;"><i class="fas fa-check-circle" style="color: #4ade80; margin-right: 10px;"></i> Technology assessment and gap analysis</li>
+                <li style="margin: 15px 0;"><i class="fas fa-check-circle" style="color: #4ade80; margin-right: 10px;"></i> Digital transformation roadmap</li>
+                <li style="margin: 15px 0;"><i class="fas fa-check-circle" style="color: #4ade80; margin-right: 10px;"></i> Enterprise architecture design</li>
+                <li style="margin: 15px 0;"><i class="fas fa-check-circle" style="color: #4ade80; margin-right: 10px;"></i> Technology vendor selection</li>
+                <li style="margin: 15px 0;"><i class="fas fa-check-circle" style="color: #4ade80; margin-right: 10px;"></i> Process optimization and automation</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- Features / Capabilities -->
+<section class="section-container-light fade-in">
+    <h2 class="section-title" style="text-align: center;">Key Consulting Services</h2>
+    <p style="text-align: center; color: #94a3b8; margin-bottom: 40px;">What our IT consulting delivers</p>
+    <div class="features-grid">
+        <div class="feature-item"><i class="fas fa-chart-line"></i><h3>Digital Strategy</h3><p>Roadmap for digital transformation</p></div>
+        <div class="feature-item"><i class="fas fa-search"></i><h3>Tech Assessment</h3><p>Current state analysis and recommendations</p></div>
+        <div class="feature-item"><i class="fas fa-draw-polygon"></i><h3>Enterprise Architecture</h3><p>Scalable technology blueprint</p></div>
+        <div class="feature-item"><i class="fas fa-handshake"></i><h3>Vendor Selection</h3><p>Technology partner evaluation</p></div>
+        <div class="feature-item"><i class="fas fa-chart-pie"></h3><h3>Cost Optimization</h3><p>Reduce IT spending by 20-40%</p></div>
+        <div class="feature-item"><i class="fas fa-shield-alt"></i><h3>Risk Assessment</h3><p>Security and compliance audit</p></div>
+    </div>
+</section>
+
+<!-- Consulting Areas -->
+<section class="section-container fade-in">
+    <h2 class="section-title" style="text-align: center;">Our Consulting Expertise</h2>
+    <p style="text-align: center; color: #94a3b8; margin-bottom: 40px;">Areas where we provide strategic guidance</p>
+    <div class="case-studies-grid">
+        <div class="case-card">
+            <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: #a855f7;"></i>
+            <h3 style="margin: 15px 0;">Cloud Strategy</h3>
+            <p>Migration planning, multi-cloud architecture, and cloud cost optimization.</p>
+        </div>
+        <div class="case-card">
+            <i class="fas fa-brain" style="font-size: 2rem; color: #a855f7;"></i>
+            <h3 style="margin: 15px 0;">AI Readiness</h3>
+            <p>AI adoption strategy, data readiness assessment, and use case identification.</p>
+        </div>
+        <div class="case-card">
+            <i class="fas fa-lock" style="font-size: 2rem; color: #a855f7;"></i>
+            <h3 style="margin: 15px 0;">Security Consulting</h3>
+            <p>Security assessment, compliance readiness, and zero-trust architecture.</p>
+        </div>
+        <div class="case-card">
+            <i class="fas fa-code-branch" style="font-size: 2rem; color: #a855f7;"></i>
+            <h3 style="margin: 15px 0;">Agile Transformation</h3>
+            <p>DevOps adoption, CI/CD implementation, and team training.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Related Case Studies -->
+<section class="section-container-light fade-in">
+    <h2 class="section-title" style="text-align: center;">Client Success Stories</h2>
+    <p style="text-align: center; color: #94a3b8; margin-bottom: 40px;">How our consulting has helped businesses transform</p>
+    <div class="case-studies-grid">
+        <div class="case-card">
+            <i class="fas fa-chart-line" style="font-size: 2rem; color: #a855f7;"></i>
+            <h3 style="margin: 15px 0;">Manufacturing Digital Transformation</h3>
+            <p>Modernized legacy systems, reduced operational costs by 35%, and improved efficiency.</p>
+            <a href="/case-studies/manufacturing" style="color: #c084fc; text-decoration: none;">Read More →</a>
+        </div>
+        <div class="case-card">
+            <i class="fas fa-hospital" style="font-size: 2rem; color: #a855f7;"></i>
+            <h3 style="margin: 15px 0;">Healthcare IT Strategy</h3>
+            <p>Developed 5-year technology roadmap achieving HIPAA compliance and interoperability.</p>
+            <a href="/case-studies/healthcare-it" style="color: #c084fc; text-decoration: none;">Read More →</a>
+        </div>
+        <div class="case-card">
+            <i class="fas fa-university" style="font-size: 2rem; color: #a855f7;"></i>
+            <h3 style="margin: 15px 0;">FinTech Architecture</h3>
+            <p>Designed scalable microservices architecture supporting 10x growth.</p>
+            <a href="/case-studies/fintech-arch" style="color: #c084fc; text-decoration: none;">Read More →</a>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="section-container fade-in">
+    <h2 class="section-title" style="text-align: center;">Frequently Asked Questions</h2>
+    <p style="text-align: center; color: #94a3b8; margin-bottom: 40px;">Common questions about our IT consulting services</p>
+    <div class="faq-list">
+        <div class="faq-item">
+            <div class="faq-question">How does your consulting process work? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Our process: Discovery & Assessment → Analysis & Recommendations → Roadmap Development → Implementation Support → Ongoing Advisory.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Do you provide implementation services? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Yes, we offer end-to-end implementation, staff augmentation, and managed services to execute the strategies we recommend.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">What industries do you specialize in? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">We have deep expertise in FinTech, Healthcare, E-commerce, Manufacturing, Logistics, and SaaS.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">How do you charge for consulting services? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">We offer flexible engagement models: fixed-fee projects, hourly consulting, or retainer-based advisory services.</div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section-container-light fade-in">
+    <div class="cta-detail">
+        <h2 style="font-size: 2rem; margin-bottom: 15px;">Ready to Transform Your Business with Technology?</h2>
+        <p style="color: #94a3b8;">Let's discuss how our IT consulting can drive your digital transformation</p>
+        <a href="/contact" class="cta-btn">Schedule a Consultation <i class="fas fa-arrow-right"></i></a>
+    </div>
+</section>
+
+<script>
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', () => {
+            const faqItem = question.parentElement;
+            faqItem.classList.toggle('active');
+            const icon = question.querySelector('i');
+            icon.style.transform = faqItem.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+        });
+    });
+    
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { threshold: 0.1 });
+    fadeElements.forEach(el => observer.observe(el));
+</script>
+
+{% endblock %}

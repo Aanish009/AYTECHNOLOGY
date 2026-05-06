@@ -1,0 +1,143 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+
+{% load static %}
+
+{% block meta_tags %}
+<meta name="description" content="Professional AI and Machine Learning services by AY Technology. LLMs, computer vision, predictive analytics, and intelligent automation solutions.">
+<meta name="keywords" content="AI services, machine learning, LLM integration, computer vision, predictive analytics, AI consulting">
+<meta property="og:title" content="AI & Machine Learning Services | AY Technology">
+<meta property="og:description" content="Transform your business with cutting-edge AI and ML solutions.">
+<meta name="robots" content="index, follow">
+{% endblock %}
+
+<style>
+    /* Use same styles as above */
+    .service-detail-hero { padding: 100px 80px; background: radial-gradient(circle at 30% 10%, rgba(26,0,79,1) 0%, rgba(59,10,130,1) 100%); }
+    .service-detail-hero h1 { font-size: 3.5rem; font-weight: 800; background: linear-gradient(135deg, #ffffff, #c084fc, #a855f7); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 20px; animation: fadeInUp 0.8s ease; }
+    .service-detail-hero p { font-size: 1.2rem; color: #cbd5e1; max-width: 700px; animation: fadeInUp 0.8s ease 0.2s backwards; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .section-container { padding: 80px; background: radial-gradient(circle at 80% 30%, #0a0f2c, #020617); }
+    .section-container-light { padding: 80px; background: radial-gradient(circle at 10% 20%, rgba(26,0,79,1) 0%, rgba(59,10,130,1) 100%); }
+    .section-title { font-size: 2.2rem; margin-bottom: 20px; background: linear-gradient(135deg, #fff, #c084fc); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .problem-solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+    .problem-card, .solution-card { background: rgba(255,255,255,0.04); backdrop-filter: blur(10px); border-radius: 28px; padding: 40px; border: 1px solid rgba(168,85,247,0.25); transition: 0.3s; }
+    .problem-card:hover, .solution-card:hover { transform: translateY(-5px); border-color: #a855f7; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px; }
+    .feature-item { background: rgba(255,255,255,0.04); border-radius: 20px; padding: 30px; text-align: center; transition: 0.3s; border: 1px solid rgba(168,85,247,0.2); }
+    .feature-item:hover { transform: translateY(-8px); background: rgba(168,85,247,0.08); border-color: #a855f7; }
+    .feature-item i { font-size: 2.5rem; color: #a855f7; margin-bottom: 15px; }
+    .tech-stack { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-top: 30px; }
+    .tech-tag { background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.3); padding: 12px 25px; border-radius: 50px; font-weight: 500; transition: 0.3s; }
+    .tech-tag:hover { background: #a855f7; transform: translateY(-3px); }
+    .case-studies-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+    .case-card { background: rgba(255,255,255,0.04); border-radius: 20px; padding: 25px; transition: 0.3s; border: 1px solid rgba(168,85,247,0.2); }
+    .case-card:hover { transform: translateY(-5px); background: rgba(168,85,247,0.08); border-color: #a855f7; }
+    .faq-item { background: rgba(255,255,255,0.04); border-radius: 16px; margin-bottom: 15px; overflow: hidden; border: 1px solid rgba(168,85,247,0.2); }
+    .faq-question { padding: 20px 25px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 1.1rem; }
+    .faq-answer { padding: 0 25px 25px; display: none; color: #94a3b8; line-height: 1.6; }
+    .faq-item.active .faq-answer { display: block; }
+    .cta-detail { text-align: center; padding: 60px; background: linear-gradient(135deg, #1a004f, #0a0f2c); border-radius: 40px; margin-top: 40px; border: 1px solid rgba(168,85,247,0.3); }
+    .cta-btn { display: inline-flex; align-items: center; gap: 12px; padding: 16px 40px; background: linear-gradient(135deg, #a855f7, #7c3aed); border-radius: 50px; color: white; text-decoration: none; font-weight: 600; transition: 0.3s; margin-top: 20px; }
+    .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(168,85,247,0.4); gap: 18px; }
+    @media (max-width: 1000px) { .service-detail-hero { padding: 60px 30px; } .service-detail-hero h1 { font-size: 2.5rem; } .section-container, .section-container-light { padding: 50px 30px; } .problem-solution-grid { grid-template-columns: 1fr; gap: 30px; } }
+    @media (max-width: 650px) { .service-detail-hero h1 { font-size: 2rem; } .section-title { font-size: 1.8rem; } .cta-detail { padding: 30px 20px; } }
+    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+
+<!-- Hero -->
+<section class="service-detail-hero fade-in">
+    <h1>AI & Machine Learning Services</h1>
+    <p>Intelligent solutions powered by cutting-edge AI — from LLMs to computer vision to predictive analytics.</p>
+</section>
+
+<!-- Problem & Solution -->
+<section class="section-container fade-in">
+    <div class="problem-solution-grid">
+        <div class="problem-card">
+            <i class="fas fa-exclamation-triangle" style="font-size: 2.5rem; color: #fbbf24; margin-bottom: 20px;"></i>
+            <h2 class="section-title">The Challenge</h2>
+            <p style="color: #cbd5e1;">Organizations struggle to leverage AI effectively:</p>
+            <ul style="margin-top: 20px; color: #94a3b8; list-style: none;">
+                <li style="margin: 15px 0;"><i class="fas fa-times-circle" style="color: #f87171;"></i> Lack of AI expertise and talent</li>
+                <li style="margin: 15px 0;"><i class="fas fa-times-circle" style="color: #f87171;"></i> Poor quality or insufficient data</li>
+                <li style="margin: 15px 0;"><i class="fas fa-times-circle" style="color: #f87171;"></i> High infrastructure and compute costs</li>
+                <li style="margin: 15px 0;"><i class="fas fa-times-circle" style="color: #f87171;"></i> Difficulty integrating AI with existing systems</li>
+            </ul>
+        </div>
+        <div class="solution-card">
+            <i class="fas fa-lightbulb" style="font-size: 2.5rem; color: #c084fc; margin-bottom: 20px;"></i>
+            <h2 class="section-title">Our Solution Approach</h2>
+            <p style="color: #cbd5e1;">We deliver production-ready AI solutions:</p>
+            <ul style="margin-top: 20px; color: #94a3b8; list-style: none;">
+                <li style="margin: 15px 0;"><i class="fas fa-check-circle" style="color: #4ade80;"></i> Custom LLM integration and fine-tuning</li>
+                <li style="margin: 15px 0;"><i class="fas fa-check-circle" style="color: #4ade80;"></i> Scalable ML infrastructure</li>
+                <li style="margin: 15px 0;"><i class="fas fa-check-circle" style="color: #4ade80;"></i> Data pipeline and preparation</li>
+                <li style="margin: 15px 0;"><i class="fas fa-check-circle" style="color: #4ade80;"></i> MLOps for continuous deployment</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<section class="section-container-light fade-in">
+    <h2 class="section-title" style="text-align: center;">AI Capabilities</h2>
+    <div class="features-grid">
+        <div class="feature-item"><i class="fas fa-comment-dots"></i><h3>LLM Integration</h3><p>ChatGPT, Claude, Llama integration</p></div>
+        <div class="feature-item"><i class="fas fa-eye"></i><h3>Computer Vision</h3><p>Image recognition, object detection</p></div>
+        <div class="feature-item"><i class="fas fa-chart-line"></i><h3>Predictive Analytics</h3><p>Forecasting, trend analysis</p></div>
+        <div class="feature-item"><i class="fas fa-microphone"></i><h3>NLP Processing</h3><p>Text analysis, sentiment, summarization</p></div>
+    </div>
+</section>
+
+<!-- Tech Stack -->
+<section class="section-container fade-in">
+    <h2 class="section-title" style="text-align: center;">AI Technology Stack</h2>
+    <div class="tech-stack">
+        <span class="tech-tag">OpenAI API</span>
+        <span class="tech-tag">LangChain</span>
+        <span class="tech-tag">TensorFlow</span>
+        <span class="tech-tag">PyTorch</span>
+        <span class="tech-tag">Hugging Face</span>
+        <span class="tech-tag">LLaMA</span>
+        <span class="tech-tag">BERT</span>
+        <span class="tech-tag">AWS SageMaker</span>
+    </div>
+</section>
+
+<!-- Case Studies -->
+<section class="section-container-light fade-in">
+    <h2 class="section-title" style="text-align: center;">AI Success Stories</h2>
+    <div class="case-studies-grid">
+        <div class="case-card"><i class="fas fa-robot" style="font-size: 2rem; color: #a855f7;"></i><h3>Customer Support AI</h3><p>70% reduction in response time with LLM chatbot</p><a href="/case-studies/ai-chatbot" style="color: #c084fc;">Read More →</a></div>
+        <div class="case-card"><i class="fas fa-chart-line" style="font-size: 2rem; color: #a855f7;"></i><h3>Predictive Maintenance</h3><p>40% reduction in downtime using ML models</p><a href="/case-studies/predictive-ml" style="color: #c084fc;">Read More →</a></div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="section-container fade-in">
+    <h2 class="section-title" style="text-align: center;">FAQs</h2>
+    <div class="faq-list">
+        <div class="faq-item"><div class="faq-question">How do you handle data privacy with AI? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">We implement enterprise-grade security, data encryption, and comply with GDPR/CCPA regulations.</div></div>
+        <div class="faq-item"><div class="faq-question">Can you work with our existing data? <i class="fas fa-chevron-down"></i></div><div class="faq-answer">Yes, we integrate with your existing databases, APIs, and cloud storage.</div></div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="section-container-light fade-in">
+    <div class="cta-detail">
+        <h2>Ready to Harness the Power of AI?</h2>
+        <p>Let's discuss how AI can transform your business</p>
+        <a href="/contact" class="cta-btn">Start Your AI Project <i class="fas fa-arrow-right"></i></a>
+    </div>
+</section>
+
+<script>
+    document.querySelectorAll('.faq-question').forEach(q => { q.addEventListener('click', () => { q.parentElement.classList.toggle('active'); }); });
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+    fadeElements.forEach(el => observer.observe(el));
+</script>
+
+{% endblock %}
