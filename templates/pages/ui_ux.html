@@ -1,0 +1,355 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+
+{% load static %}
+
+{% block meta_tags %}
+<meta name="description" content="Professional UI/UX Design services by AY Technology. User-centered design, wireframing, prototyping, user research, and usability testing.">
+<meta name="keywords" content="UI/UX design, user experience design, user interface design, wireframing, prototyping, user research">
+<meta property="og:title" content="UI/UX Design Services | AY Technology">
+<meta property="og:description" content="Create exceptional digital experiences with our expert UI/UX design team. User-centered design that drives engagement.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="index, follow">
+{% endblock %}
+
+<style>
+    /* Same styles as above */
+    .service-detail-hero {
+        padding: 100px 80px;
+        background: radial-gradient(circle at 30% 10%, rgba(26,0,79,1) 0%, rgba(59,10,130,1) 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    .service-detail-hero h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #ffffff, #c084fc, #a855f7);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 20px;
+        animation: fadeInUp 0.8s ease;
+    }
+    .service-detail-hero p {
+        font-size: 1.2rem;
+        color: #cbd5e1;
+        max-width: 700px;
+        animation: fadeInUp 0.8s ease 0.2s backwards;
+    }
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .section-container {
+        padding: 80px;
+        background: radial-gradient(circle at 80% 30%, #0a0f2c, #020617);
+    }
+    .section-container-light {
+        padding: 80px;
+        background: radial-gradient(circle at 10% 20%, rgba(26,0,79,1) 0%, rgba(59,10,130,1) 100%);
+    }
+    .section-title {
+        font-size: 2.2rem;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #fff, #c084fc);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    .problem-solution-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+        align-items: center;
+    }
+    .problem-card, .solution-card {
+        background: rgba(255,255,255,0.04);
+        backdrop-filter: blur(10px);
+        border-radius: 28px;
+        padding: 40px;
+        border: 1px solid rgba(168,85,247,0.25);
+        transition: all 0.3s;
+    }
+    .problem-card:hover, .solution-card:hover {
+        transform: translateY(-5px);
+        border-color: #a855f7;
+    }
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+    }
+    .feature-item {
+        background: rgba(255,255,255,0.04);
+        border-radius: 20px;
+        padding: 30px;
+        text-align: center;
+        transition: all 0.3s;
+        border: 1px solid rgba(168,85,247,0.2);
+    }
+    .feature-item:hover {
+        transform: translateY(-8px);
+        background: rgba(168,85,247,0.08);
+        border-color: #a855f7;
+    }
+    .feature-item i {
+        font-size: 2.5rem;
+        color: #a855f7;
+        margin-bottom: 15px;
+    }
+    .tech-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 30px;
+    }
+    .tech-tag {
+        background: rgba(168,85,247,0.15);
+        border: 1px solid rgba(168,85,247,0.3);
+        padding: 12px 25px;
+        border-radius: 50px;
+        font-weight: 500;
+        transition: all 0.3s;
+    }
+    .tech-tag:hover {
+        background: #a855f7;
+        transform: translateY(-3px);
+    }
+    .case-studies-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+    }
+    .case-card {
+        background: rgba(255,255,255,0.04);
+        border-radius: 20px;
+        padding: 25px;
+        transition: all 0.3s;
+        border: 1px solid rgba(168,85,247,0.2);
+    }
+    .case-card:hover {
+        transform: translateY(-5px);
+        background: rgba(168,85,247,0.08);
+        border-color: #a855f7;
+    }
+    .faq-item {
+        background: rgba(255,255,255,0.04);
+        border-radius: 16px;
+        margin-bottom: 15px;
+        overflow: hidden;
+        border: 1px solid rgba(168,85,247,0.2);
+    }
+    .faq-question {
+        padding: 20px 25px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+    .faq-answer {
+        padding: 0 25px 25px;
+        display: none;
+        color: #94a3b8;
+        line-height: 1.6;
+    }
+    .faq-item.active .faq-answer {
+        display: block;
+    }
+    .cta-detail {
+        text-align: center;
+        padding: 60px;
+        background: linear-gradient(135deg, #1a004f, #0a0f2c);
+        border-radius: 40px;
+        margin-top: 40px;
+        border: 1px solid rgba(168,85,247,0.3);
+    }
+    .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 40px;
+        background: linear-gradient(135deg, #a855f7, #7c3aed);
+        border-radius: 50px;
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s;
+        margin-top: 20px;
+    }
+    .cta-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(168,85,247,0.4);
+        gap: 18px;
+    }
+    @media (max-width: 1000px) {
+        .service-detail-hero { padding: 60px 30px; }
+        .service-detail-hero h1 { font-size: 2.5rem; }
+        .section-container, .section-container-light { padding: 50px 30px; }
+        .problem-solution-grid { grid-template-columns: 1fr; gap: 30px; }
+    }
+    @media (max-width: 650px) {
+        .service-detail-hero h1 { font-size: 2rem; }
+        .section-title { font-size: 1.8rem; }
+        .cta-detail { padding: 30px 20px; }
+    }
+    .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="service-detail-hero fade-in">
+    <h1>UI/UX Design Services</h1>
+    <p>Create exceptional digital experiences with user-centered design that drives engagement, satisfaction, and business growth.</p>
+</section>
+
+<!-- Problem Section -->
+<section class="section-container fade-in">
+    <div class="problem-solution-grid">
+        <div class="problem-card">
+            <i class="fas fa-exclamation-triangle" style="font-size: 2.5rem; color: #fbbf24; margin-bottom: 20px;"></i>
+            <h2 class="section-title">The Challenge</h2>
+            <p style="color: #cbd5e1; line-height: 1.7;">Businesses struggle with digital product design:</p>
+            <ul style="margin-top: 20px; color: #94a3b8; list-style: none;">
+                <li style="margin: 15px 0;"><i class="fas fa-times-circle" style="color: #f87171; margin-right: 10px;"></i> Poor user engagement and high bounce rates</li>
+                <li style="margin: 15px 0;"><i class="fas fa-times-circle" style="color: #f87171; margin-right: 10px;"></i> Inconsistent brand experience across platforms</li>
+                <li style="margin: 15px 0;"><i class="fas fa-times-circle" style="color: #f87171; margin-right: 10px;"></i> Low conversion rates and abandoned carts</li>
+                <li style="margin: 15px 0;"><i class="fas fa-times-circle" style="color: #f87171; margin-right: 10px;"></i> Negative user feedback and support requests</li>
+                <li style="margin: 15px 0;"><i class="fas fa-times-circle" style="color: #f87171; margin-right: 10px;"></i> Accessibility compliance issues</li>
+            </ul>
+        </div>
+        <div class="solution-card">
+            <i class="fas fa-lightbulb" style="font-size: 2.5rem; color: #c084fc; margin-bottom: 20px;"></i>
+            <h2 class="section-title">Our Solution Approach</h2>
+            <p style="color: #cbd5e1; line-height: 1.7;">We create user-centered designs that deliver results:</p>
+            <ul style="margin-top: 20px; color: #94a3b8; list-style: none;">
+                <li style="margin: 15px 0;"><i class="fas fa-check-circle" style="color: #4ade80; margin-right: 10px;"></i> User research and persona development</li>
+                <li style="margin: 15px 0;"><i class="fas fa-check-circle" style="color: #4ade80; margin-right: 10px;"></i> Wireframing and interactive prototyping</li>
+                <li style="margin: 15px 0;"><i class="fas fa-check-circle" style="color: #4ade80; margin-right: 10px;"></i> Usability testing and iteration</li>
+                <li style="margin: 15px 0;"><i class="fas fa-check-circle" style="color: #4ade80; margin-right: 10px;"></i> Design systems and component libraries</li>
+                <li style="margin: 15px 0;"><i class="fas fa-check-circle" style="color: #4ade80; margin-right: 10px;"></i> Accessibility (WCAG) compliance</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- Features / Capabilities -->
+<section class="section-container-light fade-in">
+    <h2 class="section-title" style="text-align: center;">Key Features & Capabilities</h2>
+    <p style="text-align: center; color: #94a3b8; margin-bottom: 40px;">What makes our UI/UX design exceptional</p>
+    <div class="features-grid">
+        <div class="feature-item"><i class="fas fa-users"></i><h3>User Research</h3><p>Deep user insights and persona development</p></div>
+        <div class="feature-item"><i class="fas fa-drafting-compass"></i><h3>Wireframing</h3><p>Low and high-fidelity wireframes</p></div>
+        <div class="feature-item"><i class="fas fa-play"></i><h3>Interactive Prototypes</h3><p>Clickable prototypes for testing</p></div>
+        <div class="feature-item"><i class="fas fa-chart-line"></i><h3>Usability Testing</h3><p>Data-driven design improvements</p></div>
+        <div class="feature-item"><i class="fas fa-palette"></i><h3>Visual Design</h3><p>Beautiful, on-brand interfaces</p></div>
+        <div class="feature-item"><i class="fas fa-universal-access"></i><h3>Accessibility</h3><p>WCAG 2.1 AA compliant</p></div>
+    </div>
+</section>
+
+<!-- Tech Stack -->
+<section class="section-container fade-in">
+    <h2 class="section-title" style="text-align: center;">Design Tools</h2>
+    <p style="text-align: center; color: #94a3b8; margin-bottom: 40px;">Industry-leading tools for exceptional design</p>
+    <div class="tech-stack">
+        <span class="tech-tag">Figma</span>
+        <span class="tech-tag">Adobe XD</span>
+        <span class="tech-tag">Sketch</span>
+        <span class="tech-tag">InVision</span>
+        <span class="tech-tag">Miro</span>
+        <span class="tech-tag">Zeplin</span>
+        <span class="tech-tag">Abstract</span>
+        <span class="tech-tag">Principle</span>
+    </div>
+</section>
+
+<!-- Related Case Studies -->
+<section class="section-container-light fade-in">
+    <h2 class="section-title" style="text-align: center;">Related Case Studies</h2>
+    <p style="text-align: center; color: #94a3b8; margin-bottom: 40px;">Success stories from our UI/UX design projects</p>
+    <div class="case-studies-grid">
+        <div class="case-card">
+            <i class="fas fa-shopping-cart" style="font-size: 2rem; color: #a855f7;"></i>
+            <h3 style="margin: 15px 0;">E-commerce Redesign</h3>
+            <p>Increased conversion rate by 65% with UX improvements and streamlined checkout.</p>
+            <a href="/case-studies/ecommerce-ux" style="color: #c084fc; text-decoration: none;">Read More →</a>
+        </div>
+        <div class="case-card">
+            <i class="fas fa-chart-line" style="font-size: 2rem; color: #a855f7;"></i>
+            <h3 style="margin: 15px 0;">SaaS Dashboard</h3>
+            <p>Reduced user onboarding time by 70% with intuitive interface design.</p>
+            <a href="/case-studies/saas-ux" style="color: #c084fc; text-decoration: none;">Read More →</a>
+        </div>
+        <div class="case-card">
+            <i class="fas fa-mobile-alt" style="font-size: 2rem; color: #a855f7;"></i>
+            <h3 style="margin: 15px 0;">Mobile App UX</h3>
+            <p>Achieved 4.9-star rating with user-centered mobile design.</p>
+            <a href="/case-studies/mobile-ux" style="color: #c084fc; text-decoration: none;">Read More →</a>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="section-container fade-in">
+    <h2 class="section-title" style="text-align: center;">Frequently Asked Questions</h2>
+    <p style="text-align: center; color: #94a3b8; margin-bottom: 40px;">Common questions about our UI/UX design services</p>
+    <div class="faq-list">
+        <div class="faq-item">
+            <div class="faq-question">What is your design process? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Our process includes: Discovery & Research → Wireframing → Interactive Prototypes → Visual Design → Usability Testing → Developer Handoff.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">How do you measure design success? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">We track key metrics including task completion rate, time-on-task, user satisfaction scores (SUS), and conversion rates.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Do you provide design systems? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">Yes, we create comprehensive design systems including component libraries, style guides, and developer documentation.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">How do you ensure accessibility? <i class="fas fa-chevron-down"></i></div>
+            <div class="faq-answer">We follow WCAG 2.1 AA guidelines, use accessibility testing tools, and conduct testing with assistive technologies.</div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section-container-light fade-in">
+    <div class="cta-detail">
+        <h2 style="font-size: 2rem; margin-bottom: 15px;">Ready to Create Amazing User Experiences?</h2>
+        <p style="color: #94a3b8;">Let's design a product your users will love</p>
+        <a href="/contact" class="cta-btn">Start Your Design Project <i class="fas fa-arrow-right"></i></a>
+    </div>
+</section>
+
+<script>
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', () => {
+            const faqItem = question.parentElement;
+            faqItem.classList.toggle('active');
+            const icon = question.querySelector('i');
+            icon.style.transform = faqItem.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+        });
+    });
+    
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { threshold: 0.1 });
+    fadeElements.forEach(el => observer.observe(el));
+</script>
+
+{% endblock %}

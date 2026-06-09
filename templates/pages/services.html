@@ -1,0 +1,418 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+
+{% load static %}
+
+<!-- SEO Meta Tags -->
+{% block meta_tags %}
+<meta name="description" content="AY Technology offers comprehensive IT services including Web Development, Mobile Apps, AI & ML, Cloud & DevOps, UI/UX Design, and IT Consulting. Transform your business with our expert solutions.">
+<meta name="keywords" content="IT services, web development, mobile apps, AI services, cloud computing, DevOps, UI/UX design, IT consulting">
+<meta name="author" content="AY Technology">
+<meta property="og:title" content="Our Services | AY Technology - Digital Transformation Solutions">
+<meta property="og:description" content="Comprehensive IT services tailored to accelerate your business growth. From AI to Cloud, we deliver excellence.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="index, follow">
+{% endblock %}
+
+<style>
+    /* Services Page Styles */
+    .services-hero {
+        padding: 100px 80px;
+        text-align: center;
+        background: radial-gradient(circle at 30% 10%, rgba(26,0,79,1) 0%, rgba(59,10,130,1) 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    .services-hero h1 {
+        font-size: 4rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #ffffff, #c084fc, #a855f7);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 20px;
+        animation: fadeInUp 0.8s ease;
+    }
+    .services-hero p {
+        font-size: 1.2rem;
+        color: #cbd5e1;
+        max-width: 700px;
+        margin: 0 auto;
+        animation: fadeInUp 0.8s ease 0.2s backwards;
+    }
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .services-hero::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(168,85,247,0.1) 0%, transparent 70%);
+        animation: rotate 20s linear infinite;
+    }
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    /* Services Grid */
+    .services-grid-section {
+        padding: 80px;
+        background: radial-gradient(circle at 80% 30%, #0a0f2c, #020617);
+    }
+    .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        background: linear-gradient(135deg, #fff, #c084fc);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    .section-subtitle {
+        text-align: center;
+        color: #94a3b8;
+        margin-bottom: 50px;
+        font-size: 1.1rem;
+    }
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 35px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+    .service-card {
+        background: rgba(255,255,255,0.04);
+        backdrop-filter: blur(12px);
+        border-radius: 28px;
+        padding: 40px 30px;
+        border: 1px solid rgba(168,85,247,0.25);
+        transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    .service-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(168,85,247,0.1), transparent);
+        transition: left 0.5s ease;
+    }
+    .service-card:hover::before {
+        left: 100%;
+    }
+    .service-card:hover {
+        transform: translateY(-12px);
+        border-color: #a855f7;
+        box-shadow: 0 20px 40px rgba(168,85,247,0.25);
+    }
+    .service-icon {
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(124,58,237,0.1));
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: #a855f7;
+        margin-bottom: 25px;
+        transition: transform 0.3s;
+    }
+    .service-card:hover .service-icon {
+        transform: scale(1.1);
+    }
+    .service-card h3 {
+        font-size: 1.6rem;
+        margin-bottom: 15px;
+        color: #f1f5f9;
+    }
+    .service-card p {
+        color: #94a3b8;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+    .service-link {
+        color: #c084fc;
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: gap 0.3s;
+    }
+    .service-link:hover {
+        gap: 12px;
+    }
+
+    /* Industries Section */
+    .industries-section {
+        padding: 80px;
+        background: radial-gradient(circle at 10% 20%, rgba(26,0,79,1) 0%, rgba(59,10,130,1) 100%);
+    }
+    .industries-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .industry-item {
+        background: rgba(255,255,255,0.04);
+        border-radius: 20px;
+        padding: 30px 20px;
+        text-align: center;
+        transition: all 0.3s;
+        border: 1px solid rgba(168,85,247,0.2);
+    }
+    .industry-item:hover {
+        transform: translateY(-5px);
+        border-color: #a855f7;
+        background: rgba(168,85,247,0.08);
+    }
+    .industry-item i {
+        font-size: 2.5rem;
+        color: #a855f7;
+        margin-bottom: 15px;
+    }
+    .industry-item h4 {
+        font-size: 1.1rem;
+        color: #f1f5f9;
+    }
+
+    /* Technologies Section */
+    .technologies-section {
+        padding: 80px;
+        background: radial-gradient(circle at 80% 30%, #0a0f2c, #020617);
+    }
+    .tech-marquee {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 25px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .tech-badge {
+        background: rgba(168,85,247,0.1);
+        border: 1px solid rgba(168,85,247,0.3);
+        padding: 12px 25px;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+    .tech-badge:hover {
+        background: #a855f7;
+        transform: translateY(-3px);
+    }
+
+    /* Process Section */
+    .process-section {
+        padding: 80px;
+        background: radial-gradient(circle at 10% 20%, rgba(26,0,79,1) 0%, rgba(59,10,130,1) 100%);
+    }
+    .process-steps {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .process-step {
+        flex: 1;
+        text-align: center;
+        padding: 30px;
+        background: rgba(255,255,255,0.04);
+        border-radius: 24px;
+        min-width: 180px;
+        position: relative;
+    }
+    .step-number {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #a855f7, #7c3aed);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    /* CTA Section */
+    .cta-services {
+        padding: 80px;
+        background: linear-gradient(135deg, #1a004f, #0a0f2c);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .cta-services h2 {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        background: linear-gradient(135deg, #fff, #c084fc);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 40px;
+        background: linear-gradient(135deg, #a855f7, #7c3aed);
+        border-radius: 50px;
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.3s;
+        margin-top: 20px;
+    }
+    .cta-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(168,85,247,0.4);
+    }
+
+    @media (max-width: 1000px) {
+        .services-hero { padding: 60px 30px; }
+        .services-hero h1 { font-size: 2.8rem; }
+        .services-grid-section, .industries-section, .technologies-section, .process-section, .cta-services {
+            padding: 50px 30px;
+        }
+        .services-grid { grid-template-columns: 1fr; }
+        .process-steps { flex-direction: column; }
+    }
+    @media (max-width: 650px) {
+        .services-hero h1 { font-size: 2rem; }
+        .section-title { font-size: 2rem; }
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="services-hero fade-in">
+    <h1>Our Services</h1>
+    <p>Comprehensive technology solutions tailored to accelerate your digital transformation journey</p>
+</section>
+
+<!-- Services Grid -->
+<section class="services-grid-section fade-in">
+    <h2 class="section-title">What We Offer</h2>
+    <p class="section-subtitle">End-to-end IT solutions for modern businesses</p>
+    <div class="services-grid">
+        <div class="service-card" onclick="location.href='/services/web-development/'">
+            <div class="service-icon"><i class="fab fa-react"></i></div>
+            <h3>Web Development</h3>
+            <p>Modern, scalable web applications using cutting-edge frameworks like React, Next.js, and Django.</p>
+            <span class="service-link">Learn More <i class="fas fa-arrow-right"></i></span>
+        </div>
+        <div class="service-card" onclick="location.href='/services/mobile-development/'">
+            <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
+            <h3>Mobile Apps</h3>
+            <p>Native and cross-platform mobile applications for iOS and Android using Flutter, Swift, and Kotlin.</p>
+            <span class="service-link">Learn More <i class="fas fa-arrow-right"></i></span>
+        </div>
+        <div class="service-card" onclick="location.href='/services/ai-ml/'">
+            <div class="service-icon"><i class="fas fa-brain"></i></div>
+            <h3>AI & Machine Learning</h3>
+            <p>Intelligent solutions including LLMs, computer vision, predictive analytics, and automation.</p>
+            <span class="service-link">Learn More <i class="fas fa-arrow-right"></i></span>
+        </div>
+        <div class="service-card" onclick="location.href='/services/cloud-devops/'">
+            <div class="service-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+            <h3>Cloud & DevOps</h3>
+            <p>AWS, Azure, and GCP solutions with CI/CD pipelines, containerization, and infrastructure as code.</p>
+            <span class="service-link">Learn More <i class="fas fa-arrow-right"></i></span>
+        </div>
+        <div class="service-card" onclick="location.href='/services/ui-ux/'">
+            <div class="service-icon"><i class="fas fa-paint-brush"></i></div>
+            <h3>UI/UX Design</h3>
+            <p>User-centered design that delivers exceptional experiences and drives engagement.</p>
+            <span class="service-link">Learn More <i class="fas fa-arrow-right"></i></span>
+        </div>
+        <div class="service-card" onclick="location.href='/services/it-consulting/'">
+            <div class="service-icon"><i class="fas fa-chart-line"></i></div>
+            <h3>IT Consulting</h3>
+            <p>Strategic technology advisory, digital transformation, and enterprise architecture planning.</p>
+            <span class="service-link">Learn More <i class="fas fa-arrow-right"></i></span>
+        </div>
+    </div>
+</section>
+
+<!-- Industries We Serve -->
+<section class="industries-section fade-in">
+    <h2 class="section-title">Industries We Serve</h2>
+    <p class="section-subtitle">Domain expertise across multiple sectors</p>
+    <div class="industries-grid">
+        <div class="industry-item"><i class="fas fa-chart-line"></i><h4>FinTech</h4></div>
+        <div class="industry-item"><i class="fas fa-hospital"></i><h4>Healthcare</h4></div>
+        <div class="industry-item"><i class="fas fa-shopping-cart"></i><h4>E-commerce</h4></div>
+        <div class="industry-item"><i class="fas fa-graduation-cap"></i><h4>EdTech</h4></div>
+        <div class="industry-item"><i class="fas fa-truck"></i><h4>Logistics</h4></div>
+        <div class="industry-item"><i class="fas fa-microphone"></i><h4>Media</h4></div>
+    </div>
+</section>
+
+<!-- Technologies We Use -->
+<section class="technologies-section fade-in">
+    <h2 class="section-title">Technologies We Use</h2>
+    <p class="section-subtitle">Modern tech stack for modern solutions</p>
+    <div class="tech-marquee">
+        <span class="tech-badge">React</span>
+        <span class="tech-badge">Next.js</span>
+        <span class="tech-badge">Python</span>
+        <span class="tech-badge">Django</span>
+        <span class="tech-badge">Node.js</span>
+        <span class="tech-badge">Flutter</span>
+        <span class="tech-badge">AWS</span>
+        <span class="tech-badge">Azure</span>
+        <span class="tech-badge">TensorFlow</span>
+        <span class="tech-badge">PyTorch</span>
+        <span class="tech-badge">Docker</span>
+        <span class="tech-badge">Kubernetes</span>
+        <span class="tech-badge">PostgreSQL</span>
+        <span class="tech-badge">MongoDB</span>
+    </div>
+</section>
+
+<!-- Process Section -->
+<section class="process-section fade-in">
+    <h2 class="section-title">Our Process</h2>
+    <p class="section-subtitle">How we bring your vision to life</p>
+    <div class="process-steps">
+        <div class="process-step"><div class="step-number">1</div><h3>Discovery</h3><p>Understand requirements & goals</p></div>
+        <div class="process-step"><div class="step-number">2</div><h3>Strategy</h3><p>Architecture & roadmap</p></div>
+        <div class="process-step"><div class="step-number">3</div><h3>Development</h3><p>Agile sprints & delivery</p></div>
+        <div class="process-step"><div class="step-number">4</div><h3>Launch & Scale</h3><p>Deployment & optimization</p></div>
+    </div>
+</section>
+
+<!-- CTA Banner -->
+<section class="cta-services fade-in">
+    <h2>Ready to Transform Your Business?</h2>
+    <p>Let's discuss how our services can help you achieve your goals</p>
+    <a href="/contact" class="cta-btn">Start a Project <i class="fas fa-arrow-right"></i></a>
+</section>
+
+<script>
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { threshold: 0.1 });
+    fadeElements.forEach(el => observer.observe(el));
+</script>
+
+{% endblock %}

@@ -1,0 +1,690 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+
+<style>
+    /* Contact Page Professional Styles */
+    .contact-hero {
+        padding: 100px 80px;
+        text-align: center;
+        background: radial-gradient(circle at 30% 10%, rgba(26,0,79,1) 0%, rgba(59,10,130,1) 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    .contact-hero h1 {
+        font-size: 3.8rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #ffffff, #c084fc, #a855f7);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 20px;
+        animation: fadeInUp 0.8s ease;
+    }
+    .contact-hero p {
+        font-size: 1.2rem;
+        color: #cbd5e1;
+        max-width: 600px;
+        margin: 0 auto;
+        animation: fadeInUp 0.8s ease 0.2s backwards;
+    }
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .contact-hero::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(168,85,247,0.1) 0%, transparent 70%);
+        animation: rotate 20s linear infinite;
+    }
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    /* Main Contact Section */
+    .contact-section {
+        padding: 80px;
+        background: radial-gradient(circle at 80% 30%, #0a0f2c, #020617);
+    }
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    /* Contact Info Cards */
+    .contact-info {
+        animation: fadeInLeft 0.8s ease;
+    }
+    @keyframes fadeInLeft {
+        from { opacity: 0; transform: translateX(-30px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+    .info-title {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #fff, #c084fc);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    .info-description {
+        color: #94a3b8;
+        margin-bottom: 40px;
+        line-height: 1.6;
+    }
+    .info-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        margin-bottom: 40px;
+    }
+    .info-card {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        background: rgba(255,255,255,0.04);
+        backdrop-filter: blur(10px);
+        border-radius: 24px;
+        padding: 25px;
+        border: 1px solid rgba(168,85,247,0.2);
+        transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        position: relative;
+        overflow: hidden;
+    }
+    .info-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(168,85,247,0.1), transparent);
+        transition: left 0.5s ease;
+    }
+    .info-card:hover::before {
+        left: 100%;
+    }
+    .info-card:hover {
+        transform: translateX(10px);
+        border-color: #a855f7;
+        background: rgba(168,85,247,0.08);
+    }
+    .info-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(124,58,237,0.1));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        color: #a855f7;
+        transition: transform 0.3s;
+    }
+    .info-card:hover .info-icon {
+        transform: scale(1.1);
+    }
+    .info-details h3 {
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+        color: #f1f5f9;
+    }
+    .info-details p, .info-details a {
+        color: #94a3b8;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+    .info-details a:hover {
+        color: #a855f7;
+    }
+
+    /* Map Container */
+    .map-container {
+        margin-top: 30px;
+        border-radius: 24px;
+        overflow: hidden;
+        border: 1px solid rgba(168,85,247,0.3);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .map-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(168,85,247,0.2);
+    }
+    .map-container iframe {
+        width: 100%;
+        height: 250px;
+        border: 0;
+        display: block;
+    }
+
+    /* Contact Form */
+    .contact-form-wrapper {
+        background: rgba(255,255,255,0.03);
+        backdrop-filter: blur(12px);
+        border-radius: 32px;
+        padding: 40px;
+        border: 1px solid rgba(168,85,247,0.25);
+        animation: fadeInRight 0.8s ease;
+    }
+    @keyframes fadeInRight {
+        from { opacity: 0; transform: translateX(30px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+    .form-title {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        color: #f1f5f9;
+    }
+    .form-subtitle {
+        color: #94a3b8;
+        margin-bottom: 30px;
+        font-size: 0.95rem;
+    }
+    .form-group {
+        margin-bottom: 25px;
+        position: relative;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 14px 18px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(168,85,247,0.3);
+        border-radius: 16px;
+        color: white;
+        font-size: 1rem;
+        transition: all 0.3s;
+        outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        border-color: #a855f7;
+        box-shadow: 0 0 15px rgba(168,85,247,0.3);
+        background: rgba(168,85,247,0.05);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+        color: #64748b;
+    }
+    .form-group select {
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23a855f7' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 18px center;
+        background-size: 20px;
+    }
+    .form-group textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+    .row-2cols {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+    .submit-btn {
+        width: 100%;
+        padding: 16px;
+        background: linear-gradient(135deg, #a855f7, #7c3aed);
+        border: none;
+        border-radius: 40px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        position: relative;
+        overflow: hidden;
+    }
+    .submit-btn::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: rgba(255,255,255,0.2);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+    .submit-btn:hover::before {
+        width: 300px;
+        height: 300px;
+    }
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(168,85,247,0.4);
+    }
+    .submit-btn i {
+        transition: transform 0.3s;
+    }
+    .submit-btn:hover i {
+        transform: translateX(5px);
+    }
+
+    /* Success Message */
+    .success-message {
+        display: none;
+        background: rgba(34,197,94,0.15);
+        border: 1px solid rgba(34,197,94,0.5);
+        border-radius: 16px;
+        padding: 15px;
+        margin-top: 20px;
+        color: #4ade80;
+        text-align: center;
+        animation: fadeInUp 0.5s ease;
+    }
+    .error-message {
+        display: none;
+        background: rgba(239,68,68,0.15);
+        border: 1px solid rgba(239,68,68,0.5);
+        border-radius: 16px;
+        padding: 15px;
+        margin-top: 20px;
+        color: #f87171;
+        text-align: center;
+        animation: fadeInUp 0.5s ease;
+    }
+
+    /* CTA Banner */
+    .cta-banner-contact {
+        padding: 80px;
+        background: linear-gradient(135deg, #1a004f, #0a0f2c);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .cta-banner-contact::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: repeating-linear-gradient(45deg, rgba(168,85,247,0.05) 0px, rgba(168,85,247,0.05) 2px, transparent 2px, transparent 10px);
+        pointer-events: none;
+    }
+    .cta-content {
+        position: relative;
+        z-index: 2;
+    }
+    .cta-banner-contact h2 {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        background: linear-gradient(135deg, #fff, #c084fc);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    .cta-banner-contact p {
+        color: #94a3b8;
+        margin-bottom: 30px;
+        font-size: 1.1rem;
+    }
+    .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 40px;
+        background: linear-gradient(135deg, #a855f7, #7c3aed);
+        border: none;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(168,85,247,0.7); }
+        50% { box-shadow: 0 0 0 15px rgba(168,85,247,0); }
+    }
+    .cta-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(168,85,247,0.4);
+    }
+
+    /* Fade-in Animation for Scroll Reveal */
+    .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1000px) {
+        .contact-hero { padding: 60px 30px; }
+        .contact-hero h1 { font-size: 2.8rem; }
+        .contact-section { padding: 50px 30px; }
+        .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+        .cta-banner-contact { padding: 50px 30px; }
+        .cta-banner-contact h2 { font-size: 2rem; }
+    }
+    @media (max-width: 650px) {
+        .contact-hero h1 { font-size: 2rem; }
+        .contact-hero p { font-size: 1rem; }
+        .contact-form-wrapper { padding: 25px; }
+        .row-2cols { grid-template-columns: 1fr; gap: 15px; }
+        .info-card { padding: 18px; }
+        .info-icon { width: 50px; height: 50px; font-size: 1.5rem; }
+        .form-title { font-size: 1.5rem; }
+        .cta-banner-contact h2 { font-size: 1.6rem; }
+        .cta-btn { padding: 12px 30px; font-size: 1rem; }
+    }
+
+    /* Loading Animation */
+    .loading {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 2px solid rgba(255,255,255,0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 0.6s linear infinite;
+    }
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="contact-hero fade-in">
+    <h1>Let's Talk About Your Project</h1>
+    <p>Have a project in mind? We'd love to hear about it. Let's bring your ideas to life together.</p>
+</section>
+
+<!-- Main Contact Section -->
+<section class="contact-section fade-in">
+    <div class="contact-grid">
+        <!-- Contact Info Side -->
+        <div class="contact-info">
+            <h2 class="info-title">Get In Touch</h2>
+            <p class="info-description">We're here to help and answer any questions you might have. We look forward to hearing from you!</p>
+            
+            <div class="info-cards">
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="info-details">
+                        <h3>Email Us</h3>
+                        <a href="mailto:hello@aytechnology.com">hello@aytechnology.com</a>
+                        <p>Response within 24 hours</p>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="info-details">
+                        <h3>Call Us</h3>
+                        <a href="tel:+18004567890">+1 (800) 456-7890</a>
+                        <p>Mon-Fri, 9AM - 6PM EST</p>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="info-details">
+                        <h3>Visit Us</h3>
+                        <p>123 Innovation Drive, San Francisco, CA 94103</p>
+                        <p>United States</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Map (Optional) -->
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.835434509562!2d-122.41941868468164!3d37.77492977975955!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c6c8f4459%3A0x72d3e5c5b7b8e5e8!2sSan%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1699999999999!5m2!1sen!2sus" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+        
+        <!-- Contact Form Side -->
+        <div class="contact-form-wrapper">
+            <h2 class="form-title">Send us a Message</h2>
+            <p class="form-subtitle">Fill out the form below and we'll get back to you within 24 hours.</p>
+            
+            <form id="contactForm">
+                <div class="form-group">
+                    <input type="text" id="name" name="name" placeholder="Your Full Name" required>
+                </div>
+                
+                <div class="row-2cols">
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="phone" name="phone" placeholder="Phone Number">
+                    </div>
+                </div>
+                
+                <div class="row-2cols">
+                    <div class="form-group">
+                        <select id="projectType" name="project_type" required>
+                            <option value="" disabled selected>Select Project Type</option>
+                            <option value="web-development">Web Development</option>
+                            <option value="mobile-app">Mobile App Development</option>
+                            <option value="ai-ml">AI & Machine Learning</option>
+                            <option value="cloud-devops">Cloud & DevOps</option>
+                            <option value="ui-ux">UI/UX Design</option>
+                            <option value="consulting">IT Consulting</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select id="budget" name="budget">
+                            <option value="" disabled selected>Estimated Budget</option>
+                            <option value="10k-25k">$10,000 - $25,000</option>
+                            <option value="25k-50k">$25,000 - $50,000</option>
+                            <option value="50k-100k">$50,000 - $100,000</option>
+                            <option value="100k+">$100,000+</option>
+                            <option value="not-sure">Not Sure / To Be Discussed</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <textarea id="message" name="message" placeholder="Tell us about your project..." required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <span>Send Message</span>
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+                
+                <div id="successMessage" class="success-message">
+                    <i class="fas fa-check-circle"></i> Thank you! Your message has been sent. We'll contact you shortly.
+                </div>
+                <div id="errorMessage" class="error-message">
+                    <i class="fas fa-exclamation-circle"></i> Oops! Something went wrong. Please try again.
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Banner - Book a Call -->
+<section class="cta-banner-contact fade-in">
+    <div class="cta-content">
+        <h2>Ready to Start Your Project?</h2>
+        <p>Let's schedule a call to discuss your requirements and how we can help</p>
+        <button class="cta-btn" onclick="bookCall()">
+            <i class="fas fa-calendar-alt"></i> Book a Free Consultation Call
+            <i class="fas fa-arrow-right"></i>
+        </button>
+    </div>
+</section>
+
+<script>
+    // Form submission handling
+    const contactForm = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const successMsg = document.getElementById('successMessage');
+    const errorMsg = document.getElementById('errorMessage');
+    
+    // Book a Call function
+    function bookCall() {
+        alert("📅 Schedule a Call\n\nOur team will reach out within 2 hours to schedule your consultation.\n\nAlternatively, email us at hello@aytechnology.com with your preferred time.");
+    }
+    
+    // Validate form before submission
+    function validateForm() {
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const projectType = document.getElementById('projectType').value;
+        const message = document.getElementById('message').value.trim();
+        
+        if (!name) {
+            alert('Please enter your name');
+            return false;
+        }
+        if (!email) {
+            alert('Please enter your email address');
+            return false;
+        }
+        if (!email.includes('@') || !email.includes('.')) {
+            alert('Please enter a valid email address');
+            return false;
+        }
+        if (!projectType) {
+            alert('Please select a project type');
+            return false;
+        }
+        if (!message) {
+            alert('Please enter your message');
+            return false;
+        }
+        return true;
+    }
+    
+    // Handle form submission
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        if (!validateForm()) {
+            return;
+        }
+        
+        // Show loading state
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<div class="loading"></div> Sending...';
+        submitBtn.disabled = true;
+        
+        // Get form data
+        const formData = {
+            name: document.getElementById('name').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            phone: document.getElementById('phone').value.trim(),
+            project_type: document.getElementById('projectType').value,
+            budget: document.getElementById('budget').value,
+            message: document.getElementById('message').value.trim(),
+        };
+        
+        try {
+            // Send to backend
+            const response = await fetch('/api/contact/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            if (response.ok) {
+                successMsg.style.display = 'block';
+                errorMsg.style.display = 'none';
+                contactForm.reset();
+                
+                setTimeout(() => {
+                    successMsg.style.display = 'none';
+                }, 5000);
+            } else {
+                throw new Error('Server error');
+            }
+        } catch (error) {
+            errorMsg.style.display = 'block';
+            successMsg.style.display = 'none';
+            
+            setTimeout(() => {
+                errorMsg.style.display = 'none';
+            }, 5000);
+        } finally {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }
+    });
+    
+    // Get CSRF token for Django
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    // Add animation on scroll
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    fadeElements.forEach(el => observer.observe(el));
+    
+    // Add input animation effects
+    const inputs = document.querySelectorAll('.form-group input, .form-group select, .form-group textarea');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.classList.add('focused');
+        });
+        input.addEventListener('blur', function() {
+            if (!this.value) {
+                this.parentElement.classList.remove('focused');
+            }
+        });
+    });
+</script>
+
+{% endblock %}

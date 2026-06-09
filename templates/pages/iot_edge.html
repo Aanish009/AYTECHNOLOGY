@@ -1,0 +1,175 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+
+{% load static %}
+
+{% block meta_tags %}
+<meta name="description" content="AY Technology IoT & Edge Computing Lab - Building connected devices, edge AI, and real-time processing solutions for smart environments.">
+<meta name="keywords" content="IoT, edge computing, connected devices, edge AI, smart sensors, real-time processing">
+<meta property="og:title" content="IoT & Edge Computing Lab | AY Technology">
+<meta property="og:description" content="Intelligent edge solutions for the connected world.">
+<meta name="robots" content="index, follow">
+{% endblock %}
+
+<style>
+    .innovation-detail-hero {
+        padding: 100px 80px;
+        text-align: center;
+        background: radial-gradient(circle at 30% 10%, rgba(26,0,79,1) 0%, rgba(59,10,130,1) 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    .innovation-detail-hero h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #ffffff, #c084fc, #a855f7);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 20px;
+        animation: fadeInUp 0.8s ease;
+    }
+    .innovation-detail-hero p {
+        font-size: 1.2rem;
+        color: #cbd5e1;
+        max-width: 700px;
+        margin: 0 auto;
+        animation: fadeInUp 0.8s ease 0.2s backwards;
+    }
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .section-container {
+        padding: 80px;
+        background: radial-gradient(circle at 80% 30%, #0a0f2c, #020617);
+    }
+    .section-container-light {
+        padding: 80px;
+        background: radial-gradient(circle at 10% 20%, rgba(26,0,79,1) 0%, rgba(59,10,130,1) 100%);
+    }
+    .section-title {
+        font-size: 2.2rem;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #fff, #c084fc);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    .iot-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 40px;
+        margin-top: 40px;
+    }
+    .iot-card {
+        background: rgba(255,255,255,0.04);
+        backdrop-filter: blur(10px);
+        border-radius: 28px;
+        padding: 35px;
+        border: 1px solid rgba(168,85,247,0.25);
+        transition: all 0.3s;
+    }
+    .iot-card:hover {
+        transform: translateY(-8px);
+        border-color: #a855f7;
+        box-shadow: 0 20px 40px rgba(168,85,247,0.2);
+    }
+    .iot-icon {
+        font-size: 3rem;
+        color: #a855f7;
+        margin-bottom: 20px;
+    }
+    .iot-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: #f1f5f9;
+    }
+    .iot-status {
+        display: inline-block;
+        background: rgba(34,197,94,0.2);
+        color: #4ade80;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        margin-top: 15px;
+    }
+    .tech-tag {
+        background: rgba(168,85,247,0.15);
+        border: 1px solid rgba(168,85,247,0.3);
+        padding: 12px 25px;
+        border-radius: 40px;
+        font-weight: 500;
+        transition: all 0.3s;
+    }
+    @media (max-width: 1000px) {
+        .innovation-detail-hero { padding: 60px 30px; }
+        .innovation-detail-hero h1 { font-size: 2.5rem; }
+        .section-container, .section-container-light { padding: 50px 30px; }
+    }
+    @media (max-width: 650px) {
+        .innovation-detail-hero h1 { font-size: 2rem; }
+        .section-title { font-size: 1.8rem; }
+        .iot-grid { grid-template-columns: 1fr; }
+    }
+    .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
+<section class="innovation-detail-hero fade-in">
+    <h1>IoT & Edge Computing Lab</h1>
+    <p>Intelligent edge solutions for the connected world — real-time processing, smart sensors, and autonomous systems</p>
+</section>
+
+<section class="section-container fade-in">
+    <h2 class="section-title">Edge Solutions</h2>
+    <div class="iot-grid">
+        <div class="iot-card">
+            <div class="iot-icon"><i class="fas fa-microchip"></i></div>
+            <h3>Edge AI Processors</h3>
+            <p>AI inference at the edge for real-time decision making without cloud dependency.</p>
+            <span class="iot-status">⚡ Optimizing</span>
+        </div>
+        <div class="iot-card">
+            <div class="iot-icon"><i class="fas fa-industry"></i></div>
+            <h3>Industrial IoT</h3>
+            <p>Predictive maintenance and asset tracking for manufacturing and logistics.</p>
+            <span class="iot-status">🏭 Deployed</span>
+        </div>
+        <div class="iot-card">
+            <div class="iot-icon"><i class="fas fa-home"></i></div>
+            <h3>Smart Environment</h3>
+            <p>Connected sensors for smart cities, buildings, and agriculture monitoring.</p>
+            <span class="iot-status">🌍 Scaling</span>
+        </div>
+    </div>
+</section>
+
+<section class="section-container-light fade-in">
+    <h2 class="section-title" style="text-align: center;">Edge Technologies</h2>
+    <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 40px;">
+        <span class="tech-tag">TensorFlow Lite</span>
+        <span class="tech-tag">AWS IoT Core</span>
+        <span class="tech-tag">Azure IoT Edge</span>
+        <span class="tech-tag">MQTT Protocol</span>
+        <span class="tech-tag">Raspberry Pi</span>
+        <span class="tech-tag">NVIDIA Jetson</span>
+    </div>
+</section>
+
+<script>
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    fadeElements.forEach(el => observer.observe(el));
+</script>
+
+{% endblock %}
