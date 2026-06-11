@@ -50,4 +50,7 @@
     .container-custom {
         @apply max-w-7xl mx-auto;
     }
+    .safe-area-bottom {
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
 }
